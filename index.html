@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Good Joint</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            user-select: none;
+        }
+        
+        body {
+            background: #ffffff;
+            color: #1e293b;
+            padding: 16px;
+            min-height: 100vh;
+        }
+        
+        /* Шапка с аватаркой и юзернеймом */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            background: #f8fafc;
+            padding: 12px 20px;
+            border-radius: 50px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2563eb, #10b981);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+            text-transform: uppercase;
+            border: 2px solid white;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+        }
+        
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .username {
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 16px;
+        }
+        
+        .user-id {
+            font-size: 13px;
+            color: #64748b;
+        }
+        
+        /* Сетка меню - 2 колонки */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        /* Карточки меню - УВЕЛИЧЕННЫЕ */
+        .menu-card {
+            background: #f8fafc;
+            border-radius: 28px;
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 12px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            min-height: 160px;
+        }
+        
+        .menu-card:active {
+            transform: scale(0.98);
+            border-color: #2563eb;
+            box-shadow: 0 8px 16px rgba(37, 99, 235, 0.1);
+        }
+        
+        /* Карточка для конкурса (на весь ряд) - УВЕЛИЧЕННАЯ */
+        .menu-card.contest {
+            grid-column: span 2;
+            background: linear-gradient(135deg, #2563eb, #10b981);
+            border: none;
+            flex-direction: row;
+            justify-content: flex-start;
+            padding: 20px 24px;
+            min-height: 120px;
+        }
+        
+        .menu-card.contest .card-image {
+            width: 64px;
+            height: 64px;
+            border-radius: 20px;
+            background: white;
+            margin-right: 20px;
+            overflow: hidden;
+        }
+        
+        .menu-card.contest .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .menu-card.contest .card-title {
+            font-size: 24px;
+            text-align: left;
+            color: white;
+            margin-bottom: 6px;
+        }
+        
+        .menu-card.contest .card-subtitle {
+            font-size: 15px;
+            text-align: left;
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .card-badge {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: #10b981;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        /* Изображения для карточек - УВЕЛИЧЕННЫЕ */
+        .card-image {
+            width: 64px;
+            height: 64px;
+            border-radius: 20px;
+            background: #e2e8f0;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+        
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .card-title {
+            font-weight: 800;
+            font-size: 18px;
+            color: #1e293b;
+            letter-spacing: 0.5px;
+        }
+        
+        .card-subtitle {
+            font-size: 14px;
+            color: #64748b;
+        }
+        
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            padding: 20px;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 36px;
+            padding: 28px;
+            max-width: 460px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        .modal-header h2 {
+            color: #2563eb;
+            font-size: 24px;
+            font-weight: 800;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 32px;
+            cursor: pointer;
+            color: #64748b;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Описание */
+        .description {
+            color: #1e293b;
+            line-height: 1.6;
+            margin-bottom: 24px;
+            font-size: 15px;
+        }
+        
+        .description .important {
+            color: #2563eb;
+            font-weight: 700;
+        }
+        
+        /* Список преимуществ */
+        .features-list {
+            background: #f8fafc;
+            border-radius: 24px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 15px;
+        }
+        
+        .feature-item:last-child {
+            border-bottom: none;
+        }
+        
+        .feature-bullet {
+            width: 10px;
+            height: 10px;
+            background: #10b981;
+            border-radius: 3px;
+        }
+        
+        /* Сетка тарифов */
+        .tariff-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 24px 0;
+        }
+        
+        .tariff-btn {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 24px;
+            padding: 20px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #1e293b;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .tariff-btn:active {
+            border-color: #2563eb;
+            background: #2563eb10;
+        }
+        
+        .tariff-btn.large {
+            grid-column: span 2;
+        }
+        
+        /* Сетка строителей */
+        .builders-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 24px 0;
+        }
+        
+        .builder-btn {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 24px;
+            padding: 24px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e293b;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .builder-btn:active {
+            border-color: #2563eb;
+            background: #2563eb10;
+        }
+        
+        .builder-btn .role {
+            font-size: 14px;
+            color: #10b981;
+            margin-top: 6px;
+        }
+        
+        /* Выделение выбора */
+        .selection-badge {
+            background: #10b981;
+            color: white;
+            padding: 16px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 20px 0;
+            font-weight: 700;
+            font-size: 16px;
+        }
+        
+        /* Ссылки */
+        .links-row {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin: 20px 0;
+            font-size: 14px;
+            flex-wrap: wrap;
+        }
+        
+        .links-row a {
+            color: #64748b;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 0;
+        }
+        
+        .links-row a:active {
+            color: #2563eb;
+        }
+        
+        /* Кнопки */
+        .action-btn {
+            background: linear-gradient(135deg, #2563eb, #10b981);
+            color: white;
+            border: none;
+            border-radius: 40px;
+            padding: 22px;
+            font-size: 20px;
+            font-weight: 800;
+            width: 100%;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 16px;
+        }
+        
+        .action-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .secondary-btn {
+            background: transparent;
+            color: #64748b;
+            border: 2px solid #e2e8f0;
+            border-radius: 40px;
+            padding: 18px;
+            font-size: 18px;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+            margin-top: 12px;
+        }
+        
+        .secondary-btn:active {
+            background: #f8fafc;
+        }
+        
+        .small-btn {
+            background: transparent;
+            color: #64748b;
+            border: 2px solid #e2e8f0;
+            border-radius: 30px;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        /* Кнопки для гайда */
+        .guide-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 24px 0;
+        }
+        
+        .guide-yes-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 20px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        
+        .guide-no-btn {
+            background: #f8fafc;
+            color: #64748b;
+            border: 2px solid #e2e8f0;
+            border-radius: 30px;
+            padding: 20px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        
+        /* Форма */
+        .form-field {
+            margin-bottom: 20px;
+        }
+        
+        .form-field label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1e293b;
+            font-size: 15px;
+        }
+        
+        .form-field input,
+        .form-field textarea {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 20px;
+            font-size: 15px;
+            transition: all 0.2s;
+            background: #f8fafc;
+        }
+        
+        .form-field input:focus,
+        .form-field textarea:focus {
+            border-color: #2563eb;
+            outline: none;
+        }
+        
+        .form-field textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .example-text {
+            color: #64748b;
+            font-size: 14px;
+            margin-top: 6px;
+        }
+        
+        /* Загрузка фото для конкурса */
+        .photo-upload {
+            border: 2px dashed #e2e8f0;
+            border-radius: 24px;
+            padding: 30px;
+            text-align: center;
+            margin: 24px 0;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #f8fafc;
+        }
+        
+        .photo-upload:hover {
+            border-color: #2563eb;
+            background: #f8fafc;
+        }
+        
+        .photo-upload span {
+            color: #64748b;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .photo-preview {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-top: 16px;
+        }
+        
+        .photo-preview-item {
+            aspect-ratio: 1;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .photo-preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .photo-preview-item .remove-photo {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        /* Языковая панель */
+        .lang-panel {
+            background: #f8fafc;
+            border-radius: 50px;
+            padding: 8px;
+            display: flex;
+            justify-content: space-around;
+            border: 1px solid #e2e8f0;
+            margin-top: 24px;
+        }
+        
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: #64748b;
+            padding: 14px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            flex: 1;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+        
+        .lang-btn.active {
+            background: linear-gradient(135deg, #2563eb, #10b981);
+            color: white;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка с аватаркой и юзернеймом -->
+    <div class="header">
+        <div class="user-info">
+            <div class="avatar" id="avatar">GJ</div>
+            <div>
+                <div class="username" id="username">Загрузка...</div>
+                <div class="user-id" id="userid">ID: загрузка</div>
+            </div>
+        </div>
+        <div class="avatar" id="userAvatar">
+            <img src="" alt="" style="display: none;" id="avatarImg">
+            <span id="avatarPlaceholder">👤</span>
+        </div>
+    </div>
+    
+    <!-- Главное меню (7 кнопок) -->
+    <div class="menu-grid">
+        <!-- 1. Отправить базу на конкурс -->
+        <div class="menu-card contest" onclick="openContestModal()">
+            <div class="card-image">
+                <img src="https://via.placeholder.com/64/ffffff/2563eb?text=🏆" alt="" id="contestImage">
+            </div>
+            <div>
+                <div class="card-title">ОТПРАВИТЬ БАЗУ НА КОНКУРС</div>
+                <div class="card-subtitle">Самая крепкая база для онлайн защиты</div>
+            </div>
+            <div class="card-badge">NEW</div>
+        </div>
+        
+        <!-- 2. Заказать кастомную базу -->
+        <div class="menu-card" onclick="openCustomBaseModal()">
+            <div class="card-image">
+                <img src="https://via.placeholder.com/64/2563eb/ffffff?text=🏗️" alt="" id="customImage">
+            </div>
+            <div class="card-title">КАСТОМНАЯ БАЗА</div>
+            <div class="card-subtitle">под тебя</div>
+        </div>
+        
+        <!-- 3. Купить VIP на сервере -->
+        <div class="menu-card" onclick="openVIPModal()">
+            <div class="card-image">
+                <img src="https://via.placeholder.com/64/f59e0b/ffffff?text=👑" alt="" id="vipImage">
+            </div>
+            <div class="card-title">КУПИТЬ VIP</div>
+            <div class="card-subtitle">на сервере</div>
+        </div>
+        
+        <!-- 4. VPN (бесплатно 7 дней) -->
+        <div class="menu-card" onclick="openVPNModal()">
+            <div class="card-image">
+                <img src="https://via.placeholder.com/64/10b981/ffffff?text=🔒" alt="" id="vpnImage">
+            </div>
+            <div class="card-title">VPN</div>
+            <div class="card-subtitle">бесплатно 7 дней</div>
+        </div>
+        
+        <!-- 5. Мультитул для Rust -->
+        <div class="menu-card" onclick="openMultitoolModal()">
+            <div class="card-image">
+                <img src="https://via.placeholder.com/64/64748b/ffffff?text=🔧" alt="" id="toolImage">
+            </div>
+            <div class="card-title">МУЛЬТИТУЛ</div>
+            <div class="card-subtitle">для Rust</div>
+        </div>
+        
+        <!-- 6. История заказов -->
+        <div class="menu-card" onclick="openHistoryModal()">
+            <div class="card-image">
+                <img src="https://via.placeholder.com/64/2563eb/ffffff?text=📋" alt="" id="historyImage">
+            </div>
+            <div class="card-title">ИСТОРИЯ ЗАКАЗОВ</div>
+            <div class="card-subtitle">твои заказы</div>
+        </div>
+        
+        <!-- 7. Репорт -->
+        <div class="menu-card" onclick="openReportLink()">
+            <div class="card-image">
+                <img src="https://via.placeholder.com/64/ef4444/ffffff?text=⚠️" alt="" id="reportImage">
+            </div>
+            <div class="card-title">РЕПОРТ</div>
+            <div class="card-subtitle">на читера</div>
+        </div>
+    </div>
+    
+    <!-- Смена языка -->
+    <div class="lang-panel">
+        <button class="lang-btn active" data-lang="ru" onclick="changeLanguage(this, 'ru')">🇷🇺 RU</button>
+        <button class="lang-btn" data-lang="en" onclick="changeLanguage(this, 'en')">🇬🇧 EN</button>
+    </div>
+    
+    <!-- Модальное окно для конкурса -->
+    <div class="modal" id="contestModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="contestTitle">ОТПРАВИТЬ БАЗУ НА КОНКУРС</h2>
+                <button class="close-btn" onclick="closeModal('contestModal')">✕</button>
+            </div>
+            
+            <div class="contest-description" id="contestDescription">
+                <p>Сейчас проходит отбор баз на тему <strong>«Самая крепкая база для ОНЛАЙН ЗАЩИТЫ»</strong></p>
+                
+                <p>Чем дешевле и крепче вы построите базу под данную тему, тем лучше. Ограничение по ресурсам до 120к металла. Будут оцениваться фишки для онлайн защиты и количество ракет на рейд в оффлайне.</p>
+                
+                <p class="important">Важно: сохранять базы на Rust Room BUILD нужно обязательно в доступе по коду. Оформляйте свои сохранения красиво, добавляйте фотографии и описание, чтобы в ролике красиво все это выглядело.</p>
+                
+                <p>Если ты хочешь принять участие — отправляй заявку!</p>
+            </div>
+            
+            <div class="example-text" id="contestFormat">
+                Отправьте данные в следующем формате (каждый пункт с новой строки):
+                <code>
+                    1. Код на базу (Rust Room Build)
+                    2. Количество человек
+                    3. Ресурсы (например: 100к камня, 20к металла)
+                    4. Футпринт (например: 3x3)
+                    5. Дополнительные комментарии к базе
+                </code>
+                
+                <p style="margin-top: 10px; color: #10b981;">Пример:</p>
+                <code style="background: #f8fafc;">
+                    wsdIlpf<br>
+                    4<br>
+                    100к камня 20к металла<br>
+                    3x3<br>
+                    База на конкурс по критериям
+                </code>
+            </div>
+            
+            <!-- Форма отправки -->
+            <div class="contest-form">
+                <div class="form-field">
+                    <label id="buildCodeLabel">1. Код на базу (Rust Room Build)</label>
+                    <input type="text" id="buildCode" placeholder="например: wsdIlpf">
+                </div>
+                
+                <div class="form-field">
+                    <label id="playerCountLabel">2. Количество человек</label>
+                    <input type="text" id="playerCount" placeholder="например: 4">
+                </div>
+                
+                <div class="form-field">
+                    <label id="resourcesLabel">3. Ресурсы</label>
+                    <input type="text" id="resources" placeholder="например: 100к камня 20к металла">
+                </div>
+                
+                <div class="form-field">
+                    <label id="footprintLabel">4. Футпринт</label>
+                    <input type="text" id="footprint" placeholder="например: 3x3">
+                </div>
+                
+                <div class="form-field">
+                    <label id="commentsLabel">5. Дополнительные комментарии</label>
+                    <textarea id="comments" placeholder="Что еще важно знать о базе..."></textarea>
+                </div>
+            </div>
+            
+            <!-- Загрузка фото -->
+            <div class="photo-upload" id="photoUpload" onclick="triggerFileUpload()">
+                <span id="photoUploadText">➕ Прикрепить фотографии (до 5 штук)</span>
+                <input type="file" id="fileInput" multiple accept="image/*" style="display: none;" onchange="handleFileSelect(event)">
+            </div>
+            
+            <div class="photo-preview" id="photoPreview"></div>
+            
+            <button class="action-btn" onclick="sendContestEntry()" id="sendContestBtn">ОТПРАВИТЬ ЗАЯВКУ</button>
+            <button class="secondary-btn" onclick="closeModal('contestModal')" id="closeContestBtn">✕</button>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для мультитула -->
+    <div class="modal" id="multitoolModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="multitoolTitle">МУЛЬТИТУЛ</h2>
+                <button class="close-btn" onclick="closeModal('multitoolModal')">✕</button>
+            </div>
+            
+            <div class="description" id="multitoolDescription">
+                <p>⚡️ RustTweaker by Woodcock — это необходимый инструмент для Растера! В одном удобном приложении собран самый полезный функционал для комфортного геймплея, чтобы каждый из вас — от новичка до киберкотлеты — смог насладиться игрой в Rust!</p>
+            </div>
+            
+            <button class="action-btn" onclick="openLink('https://rusttweaker.com/?utm_source=telegram&utm_medium=customdesign&utm_campaign=button')" id="multitoolLinkBtn">ДАЙТЕ ССЫЛКУ</button>
+            <button class="secondary-btn" onclick="closeModal('multitoolModal')" id="multitoolCloseBtn">✕</button>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для VPN -->
+    <div class="modal" id="vpnModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="vpnTitle">VPN</h2>
+                <button class="close-btn" onclick="closeModal('vpnModal')">✕</button>
+            </div>
+            
+            <div class="description" id="vpnDescription">
+                <p>vpnBAZAru.net — современный и безопасный VPN в Telegram.</p>
+                <p>Передовые протоколы, отсутствие лимитов скорости и поддержка всех устройств. Умный алгоритм гарантирует бесперебойный доступ к любым сайтам и сервисам.</p>
+                <p style="color: #10b981; font-weight: 700;">🎁 Попробуйте бесплатно в течение 7 дней.</p>
+            </div>
+            
+            <button class="action-btn" onclick="openLink('https://t.me/vpnbazarunet_bot')" id="vpnLinkBtn">ДАЙТЕ ССЫЛКУ</button>
+            <button class="secondary-btn" onclick="closeModal('vpnModal')" id="vpnCloseBtn">✕</button>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для истории заказов -->
+    <div class="modal" id="historyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="historyTitle">ИСТОРИЯ ЗАКАЗОВ</h2>
+                <button class="close-btn" onclick="closeModal('historyModal')">✕</button>
+            </div>
+            
+            <div class="description" style="text-align: center; padding: 40px 0;" id="historyDescription">
+                <p style="font-size: 16px; color: #64748b;">📋 За последние 31 день у вас не было заказов.</p>
+            </div>
+            
+            <button class="secondary-btn" onclick="closeModal('historyModal')" id="historyCloseBtn">ЗАКРЫТЬ</button>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для кастомной базы -->
+    <div class="modal" id="customBaseModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="customBaseTitle">🏗 КАСТОМНАЯ БАЗА</h2>
+                <button class="close-btn" onclick="closeCustomBaseModals()">✕</button>
+            </div>
+            
+            <div class="description" id="customBaseDescription">
+                <p><strong>Сервис заказов кастомных баз от Good Joint и его команды!</strong></p>
+                <p>Мы создаём базы под любой стиль игры — от компактных соло баз до клановых замков!</p>
+            </div>
+            
+            <div class="features-list" id="customBaseFeatures">
+                <div class="feature-item"><span class="feature-bullet"></span> Разработка базы под ваш стиль</div>
+                <div class="feature-item"><span class="feature-bullet"></span> Обсуждение возникших вопросов</div>
+                <div class="feature-item"><span class="feature-bullet"></span> Корректировки базы по необходимости</div>
+                <div class="feature-item"><span class="feature-bullet"></span> Код базы на Rust Room BUILD by GJ</div>
+            </div>
+            
+            <div class="description" id="customBaseExtra">
+                <p><strong>Дополнительно:</strong> Румтур + видео гайд на Вашу базу</p>
+                <p style="color: #10b981;">⏱️ Срок выполнения: в среднем до 7 дней</p>
+                <p style="font-size: 13px; color: #64748b;">(Цена зависит от размера базы и команды играющей в ней)</p>
+            </div>
+            
+            <div class="links-row">
+                <a href="#" onclick="openLink('https://t.me/+EqrKbhBbTJZmOWEy')" id="reviewsLink">Отзывы</a>
+                <a href="#" onclick="openLink('https://docs.google.com/document/d/1_oIQq2ac_qY5QQrJodl029rRRnoh__tKJ4zufGV4WrM')" id="termsLink">Пользовательское соглашение</a>
+                <a href="#" onclick="openLink('https://docs.google.com/document/d/1N9vfsW3KIAqM6Nk7lID4Aydb9XEnq9RHpoeCjXXJaeg')" id="privacyLink">Политика конфиденциальности</a>
+            </div>
+            
+            <button class="action-btn" onclick="showTariffSelection()" id="orderBaseBtn">ЗАКАЗАТЬ БАЗУ</button>
+            <button class="secondary-btn" onclick="closeCustomBaseModals()" id="thinkLaterBtn">ЕЩЁ ПОДУМАЮ</button>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для выбора тарифа -->
+    <div class="modal" id="tariffModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="tariffTitle">ВЫБЕРИТЕ ТАРИФ</h2>
+                <button class="close-btn" onclick="closeCustomBaseModals()">✕</button>
+            </div>
+            
+            <div class="description" id="tariffDescription">
+                <p>📝 Выберите тариф для заказа кастомной базы</p>
+            </div>
+            
+            <div class="tariff-grid">
+                <button class="tariff-btn" onclick="selectTariff('1-2 игрока')" id="tariff1">1-2 игрока</button>
+                <button class="tariff-btn" onclick="selectTariff('3-4 игрока')" id="tariff2">3-4 игрока</button>
+                <button class="tariff-btn" onclick="selectTariff('5-6 игроков')" id="tariff3">5-6 игроков</button>
+                <button class="tariff-btn" onclick="selectTariff('7-10 игроков')" id="tariff4">7-10 игроков</button>
+                <button class="tariff-btn large" onclick="selectTariff('20+ игроков')" id="tariff5">20+ игроков</button>
+            </div>
+            
+            <button class="secondary-btn" onclick="closeCustomBaseModals()" id="tariffCancelBtn">✕</button>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для выбора строителя -->
+    <div class="modal" id="builderModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="builderTitle">ВЫБЕРИТЕ СТРОИТЕЛЯ</h2>
+                <button class="close-btn" onclick="closeCustomBaseModals()">✕</button>
+            </div>
+            
+            <div class="selection-badge" id="selectedTariffDisplay">Выбран тариф: не выбран</div>
+            
+            <div class="description" id="builderDescription">
+                <p>👷 Выберите строителя для вашей базы</p>
+            </div>
+            
+            <div class="builders-grid">
+                <button class="builder-btn" onclick="selectBuilder('DVM')">
+                    DVM
+                    <div class="role">строитель</div>
+                </button>
+                <button class="builder-btn" onclick="selectBuilder('Good Joint')">
+                    Good Joint
+                    <div class="role">строитель</div>
+                </button>
+                <button class="builder-btn" onclick="selectBuilder('Биг Джонни')">
+                    Биг Джонни
+                    <div class="role">строитель</div>
+                </button>
+            </div>
+            
+            <button class="secondary-btn" onclick="closeCustomBaseModals()" id="builderCancelBtn">✕</button>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для предложения гайда -->
+    <div class="modal" id="guideModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="guideTitle">ГАЙД НА СТРОИТЕЛЬСТВО</h2>
+                <button class="close-btn" onclick="closeCustomBaseModals()">✕</button>
+            </div>
+            
+            <div class="selection-badge" id="selectedBuilderDisplay">✅ Выбран билдер: не выбран</div>
+            
+            <div class="description" id="guideDescription">
+                <p><strong>📚 Гайд на строительство базы</strong></p>
+                <p>Хотите получить подробный пошаговый гайд по строительству выбранной базы?</p>
+                <p>Он поможет:</p>
+                <p>• Быстро собрать нужные модули<br>
+                • Правильно расставить элементы<br>
+                • Избежать частых ошибок при постройке</p>
+                <p>Добавить гайд к заказу?</p>
+            </div>
+            
+            <div class="guide-buttons">
+                <button class="guide-yes-btn" onclick="selectGuide(true)" id="guideYesBtn">✅ Да, добавить гайд</button>
+                <button class="guide-no-btn" onclick="selectGuide(false)" id="guideNoBtn">❌ Нет, не добавлять</button>
+            </div>
+            
+            <button class="secondary-btn" onclick="closeCustomBaseModals()" id="guideCancelBtn">✕</button>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для контактных данных -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="contactTitle">КОНТАКТНЫЕ ДАННЫЕ</h2>
+                <button class="close-btn" onclick="closeCustomBaseModals()">✕</button>
+            </div>
+            
+            <div class="description" id="contactDescription">
+                <p><strong>📞 Контактные данные</strong></p>
+                <p>Пожалуйста, укажите как с вами можно связаться:</p>
+                <p>• Telegram username (если есть)<br>
+                • Другой способ связи (Email, Discord и т.д.)</p>
+                <p>Это необходимо для уточнения деталей заказа.</p>
+            </div>
+            
+            <div class="form-field">
+                <label id="contactLabel">Контактные данные</label>
+                <textarea id="contactInfo" rows="3" placeholder="Например: @username или email@example.com"></textarea>
+            </div>
+            
+            <button class="action-btn" onclick="submitOrder()" id="submitOrderBtn">ОТПРАВИТЬ ЗАКАЗ</button>
+            <button class="secondary-btn" onclick="closeCustomBaseModals()" id="contactCancelBtn">✕</button>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для VIP -->
+    <div class="modal" id="vipModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="vipTitle">VIP СТАТУС</h2>
+                <button class="close-btn" onclick="closeVIPModals()">✕</button>
+            </div>
+            
+            <div class="description" id="vipDescription">
+                <p>⭐️ VIP статус на сервер для строительства Rust Room BUILD by GJ даст вам:</p>
+            </div>
+            
+            <div class="features-list">
+                <div class="feature-item"><span class="feature-bullet"></span> пропуск очереди</div>
+                <div class="feature-item"><span class="feature-bullet"></span> кастомные острова (скалы, пещеры и т.д.)</div>
+                <div class="feature-item"><span class="feature-bullet"></span> ракетная пушка</div>
+                <div class="feature-item"><span class="feature-bullet"></span> запуск МЛРС</div>
+                <div class="feature-item"><span class="feature-bullet"></span> неограниченное число сохранений базы</div>
+                <div class="feature-item"><span class="feature-bullet"></span> расширенные лимиты на постройки</div>
+                <div class="feature-item"><span class="feature-bullet"></span> уменьшение кулдаунов на действия</div>
+                <div class="feature-item"><span class="feature-bullet"></span> кастомные коды для ваших баз</div>
+                <div class="feature-item"><span class="feature-bullet"></span> сменяемый цвет купола (зелёный, фиолетовый, прозрачный и т.д.)</div>
+            </div>
+            
+            <div class="links-row">
+                <a href="#" onclick="openLink('https://docs.google.com/document/d/1_oIQq2ac_qY5QQrJodl029rRRnoh__tKJ4zufGV4WrM')" id="vipTermsLink">Пользовательское соглашение</a>
+                <a href="#" onclick="openLink('https://docs.google.com/document/d/1N9vfsW3KIAqM6Nk7lID4Aydb9XEnq9RHpoeCjXXJaeg')" id="vipPrivacyLink">Политика конфиденциальности</a>
+            </div>
+            
+            <button class="action-btn" onclick="showVIPStep2()" id="vipOrderBtn">ОФОРМИТЬ VIP</button>
+            <button class="secondary-btn" onclick="closeVIPModals()" id="vipThinkLaterBtn">ЕЩЁ ПОДУМАЮ</button>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для VIP шаг 2 (STEAM ID) -->
+    <div class="modal" id="vipStep2Modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="vipStep2Title">ОФОРМЛЕНИЕ VIP</h2>
+                <button class="close-btn" onclick="closeVIPModals()">✕</button>
+            </div>
+            
+            <div class="description" id="vipStep2Description">
+                <p>📝 Для покупки VIP отправьте ваш STEAM ID64</p>
+                <p class="example-text">Пример: 76561198123456789</p>
+            </div>
+            
+            <div class="form-field">
+                <input type="text" id="steamId" placeholder="Введите STEAM ID64">
+            </div>
+            
+            <button class="action-btn" onclick="showVIPStep3()" id="vipStep2Continue">ПРОДОЛЖИТЬ</button>
+            <button class="secondary-btn" onclick="closeVIPModals()" id="vipStep2Cancel">✕</button>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для VIP шаг 3 (Промокод) -->
+    <div class="modal" id="vipStep3Modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="vipStep3Title">ПРОМОКОД</h2>
+                <button class="close-btn" onclick="closeVIPModals()">✕</button>
+            </div>
+            
+            <div class="promo-section">
+                <div class="promo-text" id="promoQuestion">🎫 У вас есть промокод?</div>
+                <div class="promo-text" style="font-size: 13px;" id="promoDescription">Если у вас есть промокод на скидку, вы можете ввести его сейчас.</div>
+                
+                <div class="promo-buttons">
+                    <button class="promo-btn" onclick="showVIPPromoInput()" id="promoYesBtn">УКАЗАТЬ ПРОМО</button>
+                    <button class="promo-btn primary" onclick="showVIPStep4()" id="promoSkipBtn">ПРОПУСТИТЬ</button>
+                </div>
+            </div>
+            
+            <div id="promoInputContainer" style="display: none; margin-top: 20px;">
+                <div class="form-field">
+                    <input type="text" id="promoCode" placeholder="Введите промокод">
+                </div>
+                <button class="action-btn" onclick="applyPromo()" id="applyPromoBtn">ПРИМЕНИТЬ</button>
+            </div>
+            
+            <button class="secondary-btn" onclick="closeVIPModals()" id="vipStep3Cancel">✕</button>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для VIP шаг 4 (Оплата) -->
+    <div class="modal" id="vipStep4Modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="vipStep4Title">ВЫБЕРИТЕ СПОСОБ ОПЛАТЫ</h2>
+                <button class="close-btn" onclick="closeVIPModals()">✕</button>
+            </div>
+            
+            <div class="payment-grid">
+                <button class="payment-btn" onclick="processPayment('usdt')">USDT</button>
+                <button class="payment-btn" onclick="processPayment('crypto')">КРИПТО БОТ</button>
+                <button class="payment-btn" onclick="processPayment('wata')">wata.pro</button>
+                <button class="payment-btn" onclick="processPayment('sbp')">RUB/SBP</button>
+                <button class="payment-btn" onclick="processPayment('yoomoney')">YOU MONEY RUB</button>
+                <button class="payment-btn manager" onclick="contactManager()">СВЯЗАТЬСЯ С МЕНЕДЖЕРОМ</button>
+            </div>
+            
+            <button class="secondary-btn" onclick="closeVIPModals()" id="vipStep4Cancel">✕</button>
+        </div>
+    </div>
+    
+    <script>
+        // Инициализация Telegram Web App
+        const tg = window.Telegram.WebApp;
+        tg.ready();
+        tg.expand();
+        
+        // Языковые версии
+        const translations = {
+            ru: {
+                // Здесь будут русские тексты (они уже в HTML)
+            },
+            en: {
+                contestTitle: "SEND BASE TO CONTEST",
+                contestDescription: '<p>Currently there is a selection of bases on the topic <strong>"The Strongest Base for ONLINE DEFENSE"</strong></p><p>The cheaper and stronger you build a base on this topic, the better. Resource limit up to 120k metal. Online defense features and number of rockets for offline raid will be evaluated.</p><p class="important">Important: save bases on Rust Room BUILD must be in access by code. Design your saves beautifully, add photos and descriptions to make it look nice in the video.</p><p>If you want to participate — send your application!</p>',
+                contestFormat: 'Send data in the following format (each item on a new line):',
+                buildCodeLabel: '1. Base code (Rust Room Build)',
+                playerCountLabel: '2. Number of players',
+                resourcesLabel: '3. Resources',
+                footprintLabel: '4. Footprint',
+                commentsLabel: '5. Additional comments',
+                photoUploadText: '➕ Attach photos (up to 5 pieces)',
+                sendContestBtn: 'SEND APPLICATION',
+                
+                multitoolTitle: 'MULTITOOL',
+                multitoolDescription: '<p>⚡️ RustTweaker by Woodcock is an essential tool for Ruster! The most useful functionality for comfortable gameplay is collected in one convenient application, so that everyone - from beginner to cyber cutlet - can enjoy playing Rust!</p>',
+                multitoolLinkBtn: 'GIVE LINK',
+                
+                vpnTitle: 'VPN',
+                vpnDescription: '<p>vpnBAZAru.net — modern and secure VPN in Telegram.</p><p>Advanced protocols, no speed limits and support for all devices. Smart algorithm guarantees uninterrupted access to any sites and services.</p><p style="color: #10b981; font-weight: 700;">🎁 Try for free for 7 days.</p>',
+                vpnLinkBtn: 'GIVE LINK',
+                
+                historyTitle: 'ORDER HISTORY',
+                historyDescription: '<p style="font-size: 16px; color: #64748b;">📋 You have no orders in the last 31 days.</p>',
+                historyCloseBtn: 'CLOSE',
+                
+                customBaseTitle: '🏗 CUSTOM BASE',
+                customBaseDescription: '<p><strong>Custom base ordering service from Good Joint and his team!</strong></p><p>We create bases for any play style — from compact solo bases to clan castles!</p>',
+                customBaseFeatures: '<div class="feature-item"><span class="feature-bullet"></span> Base development for your style</div><div class="feature-item"><span class="feature-bullet"></span> Discussion of questions</div><div class="feature-item"><span class="feature-bullet"></span> Base adjustments as needed</div><div class="feature-item"><span class="feature-bullet"></span> Base code on Rust Room BUILD by GJ</div>',
+                customBaseExtra: '<p><strong>Additional:</strong> Walkthrough + video guide for your base</p><p style="color: #10b981;">⏱️ Order completion time: on average up to 7 days</p><p style="font-size: 13px; color: #64748b;">(Price depends on base size and team playing in it)</p>',
+                reviewsLink: 'Reviews',
+                termsLink: 'Terms of Service',
+                privacyLink: 'Privacy Policy',
+                orderBaseBtn: 'ORDER BASE',
+                thinkLaterBtn: 'I\'LL THINK LATER',
+                
+                tariffTitle: 'CHOOSE TARIFF',
+                tariffDescription: '<p>📝 Choose a tariff for ordering a custom base</p>',
+                tariff1: '1-2 players',
+                tariff2: '3-4 players',
+                tariff3: '5-6 players',
+                tariff4: '7-10 players',
+                tariff5: '20+ players',
+                
+                builderTitle: 'CHOOSE BUILDER',
+                builderDescription: '<p>👷 Choose a builder for your base</p>',
+                selectedTariffDisplay: 'Selected tariff: not selected',
+                
+                guideTitle: 'BUILDING GUIDE',
+                guideDescription: '<p><strong>📚 Building guide</strong></p><p>Do you want to get a detailed step-by-step guide on building the selected base?</p><p>It will help:</p><p>• Quickly assemble the necessary modules<br>• Correctly place elements<br>• Avoid common mistakes during construction</p><p>Add a guide to the order?</p>',
+                guideYesBtn: '✅ Yes, add guide',
+                guideNoBtn: '❌ No, don\'t add',
+                selectedBuilderDisplay: '✅ Selected builder: not selected',
+                
+                contactTitle: 'CONTACT INFORMATION',
+                contactDescription: '<p><strong>📞 Contact information</strong></p><p>Please specify how we can contact you:</p><p>• Telegram username (if any)<br>• Other contact method (Email, Discord, etc.)</p><p>This is necessary to clarify order details.</p>',
+                contactLabel: 'Contact information',
+                submitOrderBtn: 'SUBMIT ORDER',
+                
+                vipTitle: 'VIP STATUS',
+                vipDescription: '<p>⭐️ VIP status on the Rust Room BUILD by GJ construction server will give you:</p>',
+                vipTermsLink: 'Terms of Service',
+                vipPrivacyLink: 'Privacy Policy',
+                vipOrderBtn: 'GET VIP',
+                vipThinkLaterBtn: 'I\'LL THINK LATER',
+                
+                vipStep2Title: 'VIP REGISTRATION',
+                vipStep2Description: '<p>📝 To purchase VIP, send your STEAM ID64</p>',
+                vipStep2Continue: 'CONTINUE',
+                
+                vipStep3Title: 'PROMO CODE',
+                promoQuestion: '🎫 Do you have a promo code?',
+                promoDescription: 'If you have a discount promo code, you can enter it now.',
+                promoYesBtn: 'ENTER PROMO',
+                promoSkipBtn: 'SKIP',
+                applyPromoBtn: 'APPLY',
+                
+                vipStep4Title: 'CHOOSE PAYMENT METHOD',
+            }
+        };
+        
+        // Текущий язык
+        let currentLang = 'ru';
+        
+        // Функция смены языка
+        window.changeLanguage = function(btn, lang) {
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentLang = lang;
+            tg.HapticFeedback.impactOccurred('light');
+            
+            if (lang === 'en') {
+                applyEnglishTranslations();
+            } else {
+                // Возврат к русскому (перезагружаем страницу или сбрасываем)
+                location.reload();
+            }
+        };
+        
+        function applyEnglishTranslations() {
+            const t = translations.en;
+            
+            // Contest modal
+            document.getElementById('contestTitle').textContent = t.contestTitle;
+            document.getElementById('contestDescription').innerHTML = t.contestDescription;
+            document.getElementById('contestFormat').innerHTML = t.contestFormat + ' ' + document.getElementById('contestFormat').innerHTML.split('Отправьте данные')[1];
+            document.getElementById('buildCodeLabel').textContent = t.buildCodeLabel;
+            document.getElementById('playerCountLabel').textContent = t.playerCountLabel;
+            document.getElementById('resourcesLabel').textContent = t.resourcesLabel;
+            document.getElementById('footprintLabel').textContent = t.footprintLabel;
+            document.getElementById('commentsLabel').textContent = t.commentsLabel;
+            document.getElementById('photoUploadText').textContent = t.photoUploadText;
+            document.getElementById('sendContestBtn').textContent = t.sendContestBtn;
+            
+            // Multitool modal
+            document.getElementById('multitoolTitle').textContent = t.multitoolTitle;
+            document.getElementById('multitoolDescription').innerHTML = t.multitoolDescription;
+            document.getElementById('multitoolLinkBtn').textContent = t.multitoolLinkBtn;
+            
+            // VPN modal
+            document.getElementById('vpnTitle').textContent = t.vpnTitle;
+            document.getElementById('vpnDescription').innerHTML = t.vpnDescription;
+            document.getElementById('vpnLinkBtn').textContent = t.vpnLinkBtn;
+            
+            // History modal
+            document.getElementById('historyTitle').textContent = t.historyTitle;
+            document.getElementById('historyDescription').innerHTML = t.historyDescription;
+            document.getElementById('historyCloseBtn').textContent = t.historyCloseBtn;
+            
+            // Custom base modal
+            document.getElementById('customBaseTitle').textContent = t.customBaseTitle;
+            document.getElementById('customBaseDescription').innerHTML = t.customBaseDescription;
+            document.getElementById('customBaseFeatures').innerHTML = t.customBaseFeatures;
+            document.getElementById('customBaseExtra').innerHTML = t.customBaseExtra;
+            document.getElementById('reviewsLink').textContent = t.reviewsLink;
+            document.getElementById('termsLink').textContent = t.termsLink;
+            document.getElementById('privacyLink').textContent = t.privacyLink;
+            document.getElementById('orderBaseBtn').textContent = t.orderBaseBtn;
+            document.getElementById('thinkLaterBtn').textContent = t.thinkLaterBtn;
+            
+            // Tariff modal
+            document.getElementById('tariffTitle').textContent = t.tariffTitle;
+            document.getElementById('tariffDescription').innerHTML = t.tariffDescription;
+            document.getElementById('tariff1').textContent = t.tariff1;
+            document.getElementById('tariff2').textContent = t.tariff2;
+            document.getElementById('tariff3').textContent = t.tariff3;
+            document.getElementById('tariff4').textContent = t.tariff4;
+            document.getElementById('tariff5').textContent = t.tariff5;
+            
+            // Builder modal
+            document.getElementById('builderTitle').textContent = t.builderTitle;
+            document.getElementById('builderDescription').innerHTML = t.builderDescription;
+            document.getElementById('selectedTariffDisplay').textContent = t.selectedTariffDisplay;
+            
+            // Guide modal
+            document.getElementById('guideTitle').textContent = t.guideTitle;
+            document.getElementById('guideDescription').innerHTML = t.guideDescription;
+            document.getElementById('guideYesBtn').innerHTML = t.guideYesBtn;
+            document.getElementById('guideNoBtn').innerHTML = t.guideNoBtn;
+            
+            // Contact modal
+            document.getElementById('contactTitle').textContent = t.contactTitle;
+            document.getElementById('contactDescription').innerHTML = t.contactDescription;
+            document.getElementById('contactLabel').textContent = t.contactLabel;
+            document.getElementById('submitOrderBtn').textContent = t.submitOrderBtn;
+            
+            // VIP modals
+            document.getElementById('vipTitle').textContent = t.vipTitle;
+            document.getElementById('vipDescription').innerHTML = t.vipDescription;
+            document.getElementById('vipTermsLink').textContent = t.vipTermsLink;
+            document.getElementById('vipPrivacyLink').textContent = t.vipPrivacyLink;
+            document.getElementById('vipOrderBtn').textContent = t.vipOrderBtn;
+            document.getElementById('vipThinkLaterBtn').textContent = t.vipThinkLaterBtn;
+            
+            document.getElementById('vipStep2Title').textContent = t.vipStep2Title;
+            document.getElementById('vipStep2Description').innerHTML = t.vipStep2Description;
+            document.getElementById('vipStep2Continue').textContent = t.vipStep2Continue;
+            
+            document.getElementById('vipStep3Title').textContent = t.vipStep3Title;
+            document.getElementById('promoQuestion').textContent = t.promoQuestion;
+            document.getElementById('promoDescription').textContent = t.promoDescription;
+            document.getElementById('promoYesBtn').textContent = t.promoYesBtn;
+            document.getElementById('promoSkipBtn').textContent = t.promoSkipBtn;
+            document.getElementById('applyPromoBtn').textContent = t.applyPromoBtn;
+            
+            document.getElementById('vipStep4Title').textContent = t.vipStep4Title;
+        }
+        
+        // Получаем данные пользователя из Telegram
+        const user = tg.initDataUnsafe?.user;
+        
+        if (user) {
+            const username = user.username ? '@' + user.username : user.first_name;
+            document.getElementById('username').textContent = username;
+            document.getElementById('userid').textContent = 'ID: ' + user.id;
+            
+            const initials = (user.first_name?.[0] || '') + (user.last_name?.[0] || '');
+            if (initials) {
+                document.getElementById('avatar').textContent = initials.toUpperCase();
+            }
+            
+            if (user.photo_url) {
+                document.getElementById('avatarImg').src = user.photo_url;
+                document.getElementById('avatarImg').style.display = 'block';
+                document.getElementById('avatarPlaceholder').style.display = 'none';
+            }
+            
+            tg.sendData(JSON.stringify({
+                action: 'user_info',
+                user_id: user.id,
+                username: user.username,
+                first_name: user.first_name
+            }));
+        }
+        
+        // Переменные для хранения выбора
+        let selectedTariff = '';
+        let selectedBuilder = '';
+        let selectedTariffPrice = 0;
+        let selectedGuide = false;
+        let selectedFiles = [];
+        
+        // Цены на гайд
+        const guidePrices = {
+            '1-2 игрока': 3000,
+            '3-4 игрока': 3500,
+            '5-6 игроков': 4000,
+            '7-10 игроков': 4500,
+            '20+ игроков': 5000
+        };
+        
+        // Функции для модальных окон
+        window.openModal = function(modalId) {
+            document.getElementById(modalId).classList.add('show');
+            tg.HapticFeedback.impactOccurred('medium');
+        };
+        
+        window.closeModal = function(modalId) {
+            document.getElementById(modalId).classList.remove('show');
+        };
+        
+        // Репорт - сразу открываем ссылку
+        window.openReportLink = function() {
+            tg.openLink('https://t.me/RoomBuildSupport_bot');
+        };
+        
+        // Кастомная база
+        window.openCustomBaseModal = function() {
+            openModal('customBaseModal');
+        };
+        
+        window.showTariffSelection = function() {
+            closeModal('customBaseModal');
+            openModal('tariffModal');
+        };
+        
+        window.selectTariff = function(tariff) {
+            selectedTariff = tariff;
+            selectedTariffPrice = guidePrices[tariff] || 0;
+            
+            // Обновляем текст на английском если нужно
+            if (currentLang === 'en') {
+                document.getElementById('selectedTariffDisplay').textContent = `Selected tariff: ${tariff}`;
+            } else {
+                document.getElementById('selectedTariffDisplay').textContent = `Выбран тариф: ${tariff}`;
+            }
+            
+            closeModal('tariffModal');
+            openModal('builderModal');
+            tg.HapticFeedback.impactOccurred('medium');
+        };
+        
+        window.selectBuilder = function(builder) {
+            selectedBuilder = builder;
+            
+            // Обновляем текст в модалке гайда
+            if (currentLang === 'en') {
+                document.getElementById('selectedBuilderDisplay').textContent = `✅ Selected builder: ${builder}`;
+                
+                // Обновляем текст кнопки с ценой
+                const price = guidePrices[selectedTariff] || 0;
+                document.getElementById('guideYesBtn').innerHTML = `✅ Yes, add guide (+${price} RUB)`;
+            } else {
+                document.getElementById('selectedBuilderDisplay').textContent = `✅ Выбран билдер: ${builder}`;
+                
+                // Обновляем текст кнопки с ценой
+                const price = guidePrices[selectedTariff] || 0;
+                document.getElementById('guideYesBtn').innerHTML = `✅ Да, добавить гайд (+${price} рублей)`;
+            }
+            
+            closeModal('builderModal');
+            openModal('guideModal');
+            tg.HapticFeedback.impactOccurred('medium');
+        };
+        
+        window.selectGuide = function(withGuide) {
+            selectedGuide = withGuide;
+            closeModal('guideModal');
+            openModal('contactModal');
+            tg.HapticFeedback.impactOccurred('medium');
+        };
+        
+        window.submitOrder = function() {
+            const contactInfo = document.getElementById('contactInfo').value.trim();
+            
+            if (!contactInfo) {
+                if (currentLang === 'en') {
+                    tg.showAlert('Please enter contact information');
+                } else {
+                    tg.showAlert('Введите контактные данные');
+                }
+                return;
+            }
+            
+            tg.HapticFeedback.impactOccurred('heavy');
+            
+            // Отправляем заказ в бота
+            tg.sendData(JSON.stringify({
+                action: 'custom_base_order',
+                tariff: selectedTariff,
+                builder: selectedBuilder,
+                guide: selectedGuide,
+                guide_price: selectedGuide ? guidePrices[selectedTariff] : 0,
+                contact: contactInfo
+            }));
+            
+            if (currentLang === 'en') {
+                tg.showAlert(`✅ Order sent!\nTariff: ${selectedTariff}\nBuilder: ${selectedBuilder}\nGuide: ${selectedGuide ? 'Yes' : 'No'}`);
+            } else {
+                tg.showAlert(`✅ Заказ отправлен!\nТариф: ${selectedTariff}\nБилдер: ${selectedBuilder}\nГайд: ${selectedGuide ? 'Да' : 'Нет'}`);
+            }
+            
+            closeCustomBaseModals();
+        };
+        
+        window.closeCustomBaseModals = function() {
+            closeModal('customBaseModal');
+            closeModal('tariffModal');
+            closeModal('builderModal');
+            closeModal('guideModal');
+            closeModal('contactModal');
+        };
+        
+        // Мультитул
+        window.openMultitoolModal = function() {
+            openModal('multitoolModal');
+        };
+        
+        // VPN
+        window.openVPNModal = function() {
+            openModal('vpnModal');
+        };
+        
+        // История заказов
+        window.openHistoryModal = function() {
+            openModal('historyModal');
+        };
+        
+        // Конкурс
+        window.openContestModal = function() {
+            openModal('contestModal');
+        };
+        
+        // Загрузка фото для конкурса
+        window.triggerFileUpload = function() {
+            document.getElementById('fileInput').click();
+        };
+        
+        window.handleFileSelect = function(event) {
+            const files = Array.from(event.target.files);
+            
+            if (selectedFiles.length + files.length > 5) {
+                if (currentLang === 'en') {
+                    tg.showAlert('You can attach no more than 5 photos');
+                } else {
+                    tg.showAlert('Можно прикрепить не более 5 фотографий');
+                }
+                return;
+            }
+            
+            files.forEach(file => {
+                if (file.type.startsWith('image/')) {
+                    selectedFiles.push(file);
+                }
+            });
+            
+            updatePhotoPreview();
+        };
+        
+        function updatePhotoPreview() {
+            const preview = document.getElementById('photoPreview');
+            preview.innerHTML = '';
+            
+            selectedFiles.forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const item = document.createElement('div');
+                    item.className = 'photo-preview-item';
+                    item.innerHTML = `
+                        <img src="${e.target.result}" alt="">
+                        <div class="remove-photo" onclick="removePhoto(${index})">✕</div>
+                    `;
+                    preview.appendChild(item);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+        
+        window.removePhoto = function(index) {
+            selectedFiles.splice(index, 1);
+            updatePhotoPreview();
+        };
+        
+        window.sendContestEntry = function() {
+            const buildCode = document.getElementById('buildCode').value.trim();
+            const playerCount = document.getElementById('playerCount').value.trim();
+            const resources = document.getElementById('resources').value.trim();
+            const footprint = document.getElementById('footprint').value.trim();
+            const comments = document.getElementById('comments').value.trim();
+            
+            if (!buildCode || !playerCount || !resources || !footprint) {
+                if (currentLang === 'en') {
+                    tg.showAlert('Fill in all required fields');
+                } else {
+                    tg.showAlert('Заполни все обязательные поля');
+                }
+                return;
+            }
+            
+            const entryText = `${buildCode}\n${playerCount}\n${resources}\n${footprint}\n${comments || 'Без комментариев'}`;
+            
+            tg.HapticFeedback.impactOccurred('heavy');
+            
+            tg.sendData(JSON.stringify({
+                action: 'contest_entry',
+                text: entryText,
+                photos_count: selectedFiles.length
+            }));
+            
+            if (currentLang === 'en') {
+                tg.showAlert('✅ Application sent!');
+            } else {
+                tg.showAlert('✅ Заявка отправлена!');
+            }
+            
+            closeModal('contestModal');
+        };
+        
+        // VIP функции
+        window.openVIPModal = function() {
+            openModal('vipModal');
+        };
+        
+        window.showVIPStep2 = function() {
+            closeModal('vipModal');
+            openModal('vipStep2Modal');
+        };
+        
+        window.showVIPStep3 = function() {
+            const steamId = document.getElementById('steamId').value.trim();
+            if (!steamId) {
+                if (currentLang === 'en') {
+                    tg.showAlert('Enter STEAM ID64');
+                } else {
+                    tg.showAlert('Введите STEAM ID64');
+                }
+                return;
+            }
+            closeModal('vipStep2Modal');
+            openModal('vipStep3Modal');
+        };
+        
+        window.showVIPPromoInput = function() {
+            document.getElementById('promoInputContainer').style.display = 'block';
+        };
+        
+        window.applyPromo = function() {
+            const promo = document.getElementById('promoCode').value.trim();
+            if (currentLang === 'en') {
+                tg.showAlert('Promo code applied');
+            } else {
+                tg.showAlert('Промокод применен');
+            }
+            showVIPStep4();
+        };
+        
+        window.showVIPStep4 = function() {
+            closeModal('vipStep3Modal');
+            openModal('vipStep4Modal');
+        };
+        
+        window.closeVIPModals = function() {
+            closeModal('vipModal');
+            closeModal('vipStep2Modal');
+            closeModal('vipStep3Modal');
+            closeModal('vipStep4Modal');
+        };
+        
+        window.processPayment = function(method) {
+            tg.sendData(JSON.stringify({
+                action: 'vip_payment',
+                method: method
+            }));
+            
+            if (currentLang === 'en') {
+                tg.showAlert('Payment via ' + method.toUpperCase());
+            } else {
+                tg.showAlert('Оплата через ' + method.toUpperCase());
+            }
+            
+            closeVIPModals();
+        };
+        
+        window.contactManager = function() {
+            openLink('https://t.me/dvm_builder');
+        };
+        
+        // Общие функции
+        window.openLink = function(url) {
+            tg.openLink(url);
+        };
+        
+        window.selectAction = function(action) {
+            tg.HapticFeedback.impactOccurred('medium');
+            tg.sendData(JSON.stringify({ action: action }));
+        };
+    </script>
+</body>
+</html>
