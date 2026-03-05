@@ -97,7 +97,7 @@
             position: relative;
             overflow: hidden;
             box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-            min-height: 160px;
+            min-height: 180px;
         }
         
         .menu-card:active {
@@ -114,12 +114,12 @@
             flex-direction: row;
             justify-content: flex-start;
             padding: 20px 24px;
-            min-height: 120px;
+            min-height: 140px;
         }
         
         .menu-card.contest .card-image {
-            width: 64px;
-            height: 64px;
+            width: 80px;
+            height: 80px;
             border-radius: 20px;
             background: white;
             margin-right: 20px;
@@ -160,8 +160,8 @@
         
         /* Изображения для карточек - УВЕЛИЧЕННЫЕ */
         .card-image {
-            width: 64px;
-            height: 64px;
+            width: 80px;
+            height: 80px;
             border-radius: 20px;
             background: #e2e8f0;
             margin-bottom: 12px;
@@ -567,7 +567,7 @@
             cursor: pointer;
         }
         
-        /* Языковая панель */
+        /* Панель с флагами - УВЕЛИЧЕННАЯ */
         .lang-panel {
             background: #f8fafc;
             border-radius: 50px;
@@ -582,19 +582,27 @@
             background: transparent;
             border: none;
             color: #64748b;
-            padding: 14px 24px;
+            padding: 16px 24px;
             border-radius: 40px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             flex: 1;
-            font-size: 16px;
+            font-size: 18px;
             transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
         
         .lang-btn.active {
             background: linear-gradient(135deg, #2563eb, #10b981);
             color: white;
             box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+        }
+        
+        .lang-btn .flag {
+            font-size: 24px;
         }
     </style>
 </head>
@@ -614,102 +622,108 @@
         </div>
     </div>
     
-    <!-- Главное меню (7 кнопок) -->
+    <!-- Главное меню (7 кнопок) с картинками -->
     <div class="menu-grid">
-        <!-- 1. Отправить базу на конкурс -->
+        <!-- 1. SEND BASE TO CONTEST -->
         <div class="menu-card contest" onclick="openContestModal()">
             <div class="card-image">
-                <img src="<img src="https://cdn-icons-png.flaticon.com/512/2917/2917996.png" width="64" height="64">" alt="" id="contestImage">
-" alt="" id="contestImage">
+                <img src="https://i.postimg.cc/rsWVgbP1/image.jpg" alt="Contest" id="contestImage">
             </div>
             <div>
-                <div class="card-title">ОТПРАВИТЬ БАЗУ НА КОНКУРС</div>
-                <div class="card-subtitle">Самая крепкая база для онлайн защиты</div>
+                <div class="card-title" data-ru="ОТПРАВИТЬ БАЗУ НА КОНКУРС" data-en="SEND BASE TO CONTEST">ОТПРАВИТЬ БАЗУ НА КОНКУРС</div>
+                <div class="card-subtitle" data-ru="Самая крепкая база для онлайн защиты" data-en="The strongest base for online defense">Самая крепкая база для онлайн защиты</div>
             </div>
-            <div class="card-badge">NEW</div>
+            <div class="card-badge" data-ru="NEW" data-en="NEW">NEW</div>
         </div>
         
-        <!-- 2. Заказать кастомную базу -->
+        <!-- 2. CUSTOM BASE -->
         <div class="menu-card" onclick="openCustomBaseModal()">
             <div class="card-image">
-                <img src="<img src="https://cdn-icons-png.flaticon.com/512/3126/3126647.png" width="64" height="64">" alt="" id="customImage">
+                <img src="https://i.postimg.cc/XNzS6jvN/image.jpg" alt="Custom Base" id="customImage">
             </div>
-            <div class="card-title">КАСТОМНАЯ БАЗА</div>
-            <div class="card-subtitle">под тебя</div>
+            <div class="card-title" data-ru="КАСТОМНАЯ БАЗА" data-en="CUSTOM BASE">КАСТОМНАЯ БАЗА</div>
+            <div class="card-subtitle" data-ru="под тебя" data-en="for you">под тебя</div>
         </div>
         
-        <!-- 3. Купить VIP на сервере -->
+        <!-- 3. BUY VIP -->
         <div class="menu-card" onclick="openVIPModal()">
             <div class="card-image">
-                <img src="https://via.placeholder.com/64/f59e0b/ffffff?text=👑" alt="" id="vipImage">
+                <img src="https://i.postimg.cc/VYFqWc9J/image.jpg" alt="VIP" id="vipImage">
             </div>
-            <div class="card-title">КУПИТЬ VIP</div>
-            <div class="card-subtitle">на сервере</div>
+            <div class="card-title" data-ru="КУПИТЬ VIP" data-en="BUY VIP">КУПИТЬ VIP</div>
+            <div class="card-subtitle" data-ru="на сервере" data-en="on server">на сервере</div>
         </div>
         
-        <!-- 4. VPN (бесплатно 7 дней) -->
+        <!-- 4. VPN -->
         <div class="menu-card" onclick="openVPNModal()">
             <div class="card-image">
-                <img src="https://via.placeholder.com/64/10b981/ffffff?text=🔒" alt="" id="vpnImage">
+                <img src="https://i.postimg.cc/6qfyDGhq/image.jpg" alt="VPN" id="vpnImage">
             </div>
-            <div class="card-title">VPN</div>
-            <div class="card-subtitle">бесплатно 7 дней</div>
+            <div class="card-title" data-ru="VPN" data-en="VPN">VPN</div>
+            <div class="card-subtitle" data-ru="бесплатно 7 дней" data-en="free 7 days">бесплатно 7 дней</div>
         </div>
         
-        <!-- 5. Мультитул для Rust -->
+        <!-- 5. MULTITOOL -->
         <div class="menu-card" onclick="openMultitoolModal()">
             <div class="card-image">
-                <img src="https://via.placeholder.com/64/64748b/ffffff?text=🔧" alt="" id="toolImage">
+                <img src="https://i.postimg.cc/RVJNFwT9/image.jpg" alt="Multitool" id="toolImage">
             </div>
-            <div class="card-title">МУЛЬТИТУЛ</div>
-            <div class="card-subtitle">для Rust</div>
+            <div class="card-title" data-ru="МУЛЬТИТУЛ" data-en="MULTITOOL">МУЛЬТИТУЛ</div>
+            <div class="card-subtitle" data-ru="для Rust" data-en="for Rust">для Rust</div>
         </div>
         
-        <!-- 6. История заказов -->
+        <!-- 6. ORDER HISTORY -->
         <div class="menu-card" onclick="openHistoryModal()">
             <div class="card-image">
-                <img src="https://via.placeholder.com/64/2563eb/ffffff?text=📋" alt="" id="historyImage">
+                <img src="https://i.postimg.cc/7hYXHs7D/image.jpg" alt="History" id="historyImage">
             </div>
-            <div class="card-title">ИСТОРИЯ ЗАКАЗОВ</div>
-            <div class="card-subtitle">твои заказы</div>
+            <div class="card-title" data-ru="ИСТОРИЯ ЗАКАЗОВ" data-en="ORDER HISTORY">ИСТОРИЯ ЗАКАЗОВ</div>
+            <div class="card-subtitle" data-ru="твои заказы" data-en="your orders">твои заказы</div>
         </div>
         
-        <!-- 7. Репорт -->
+        <!-- 7. REPORT -->
         <div class="menu-card" onclick="openReportLink()">
             <div class="card-image">
-                <img src="https://via.placeholder.com/64/ef4444/ffffff?text=⚠️" alt="" id="reportImage">
+                <img src="https://i.postimg.cc/MT6VWjPB/image.jpg" alt="Report" id="reportImage">
             </div>
-            <div class="card-title">РЕПОРТ</div>
-            <div class="card-subtitle">на читера</div>
+            <div class="card-title" data-ru="РЕПОРТ" data-en="REPORT">РЕПОРТ</div>
+            <div class="card-subtitle" data-ru="на читера" data-en="on cheater">на читера</div>
         </div>
     </div>
     
-    <!-- Смена языка -->
+    <!-- Панель с флагами для смены языка -->
     <div class="lang-panel">
-        <button class="lang-btn active" data-lang="ru" onclick="changeLanguage(this, 'ru')">🇷🇺 RU</button>
-        <button class="lang-btn" data-lang="en" onclick="changeLanguage(this, 'en')">🇬🇧 EN</button>
+        <button class="lang-btn active" data-lang="ru" onclick="changeLanguage(this, 'ru')">
+            <span class="flag">🇷🇺</span> RU
+        </button>
+        <button class="lang-btn" data-lang="en" onclick="changeLanguage(this, 'en')">
+            <span class="flag">🇬🇧</span> EN
+        </button>
+        <button class="lang-btn" data-lang="us" onclick="changeLanguage(this, 'us')">
+            <span class="flag">🇺🇸</span> US
+        </button>
     </div>
     
     <!-- Модальное окно для конкурса -->
     <div class="modal" id="contestModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="contestTitle">ОТПРАВИТЬ БАЗУ НА КОНКУРС</h2>
+                <h2 id="contestTitle" data-ru="ОТПРАВИТЬ БАЗУ НА КОНКУРС" data-en="SEND BASE TO CONTEST">ОТПРАВИТЬ БАЗУ НА КОНКУРС</h2>
                 <button class="close-btn" onclick="closeModal('contestModal')">✕</button>
             </div>
             
             <div class="contest-description" id="contestDescription">
-                <p>Сейчас проходит отбор баз на тему <strong>«Самая крепкая база для ОНЛАЙН ЗАЩИТЫ»</strong></p>
+                <p data-ru="Сейчас проходит отбор баз на тему" data-en="Currently there is a selection of bases on the topic">Сейчас проходит отбор баз на тему <strong data-ru="«Самая крепкая база для ОНЛАЙН ЗАЩИТЫ»" data-en="«The Strongest Base for ONLINE DEFENSE»">«Самая крепкая база для ОНЛАЙН ЗАЩИТЫ»</strong></p>
                 
-                <p>Чем дешевле и крепче вы построите базу под данную тему, тем лучше. Ограничение по ресурсам до 120к металла. Будут оцениваться фишки для онлайн защиты и количество ракет на рейд в оффлайне.</p>
+                <p data-ru="Чем дешевле и крепче вы построите базу под данную тему, тем лучше. Ограничение по ресурсам до 120к металла. Будут оцениваться фишки для онлайн защиты и количество ракет на рейд в оффлайне." data-en="The cheaper and stronger you build a base on this topic, the better. Resource limit up to 120k metal. Online defense features and number of rockets for offline raid will be evaluated.">Чем дешевле и крепче вы построите базу под данную тему, тем лучше. Ограничение по ресурсам до 120к металла. Будут оцениваться фишки для онлайн защиты и количество ракет на рейд в оффлайне.</p>
                 
-                <p class="important">Важно: сохранять базы на Rust Room BUILD нужно обязательно в доступе по коду. Оформляйте свои сохранения красиво, добавляйте фотографии и описание, чтобы в ролике красиво все это выглядело.</p>
+                <p class="important" data-ru="Важно: сохранять базы на Rust Room BUILD нужно обязательно в доступе по коду. Оформляйте свои сохранения красиво, добавляйте фотографии и описание, чтобы в ролике красиво все это выглядело." data-en="Important: save bases on Rust Room BUILD must be in access by code. Design your saves beautifully, add photos and descriptions to make it look nice in the video.">Важно: сохранять базы на Rust Room BUILD нужно обязательно в доступе по коду. Оформляйте свои сохранения красиво, добавляйте фотографии и описание, чтобы в ролике красиво все это выглядело.</p>
                 
-                <p>Если ты хочешь принять участие — отправляй заявку!</p>
+                <p data-ru="Если ты хочешь принять участие — отправляй заявку!" data-en="If you want to participate — send your application!">Если ты хочешь принять участие — отправляй заявку!</p>
             </div>
             
             <div class="example-text" id="contestFormat">
-                Отправьте данные в следующем формате (каждый пункт с новой строки):
+                <span data-ru="Отправьте данные в следующем формате (каждый пункт с новой строки):" data-en="Send data in the following format (each item on a new line):">Отправьте данные в следующем формате (каждый пункт с новой строки):</span>
                 <code>
                     1. Код на базу (Rust Room Build)
                     2. Количество человек
@@ -718,7 +732,7 @@
                     5. Дополнительные комментарии к базе
                 </code>
                 
-                <p style="margin-top: 10px; color: #10b981;">Пример:</p>
+                <p style="margin-top: 10px; color: #10b981;" data-ru="Пример:" data-en="Example:">Пример:</p>
                 <code style="background: #f8fafc;">
                     wsdIlpf<br>
                     4<br>
@@ -731,41 +745,41 @@
             <!-- Форма отправки -->
             <div class="contest-form">
                 <div class="form-field">
-                    <label id="buildCodeLabel">1. Код на базу (Rust Room Build)</label>
+                    <label id="buildCodeLabel" data-ru="1. Код на базу (Rust Room Build)" data-en="1. Base code (Rust Room Build)">1. Код на базу (Rust Room Build)</label>
                     <input type="text" id="buildCode" placeholder="например: wsdIlpf">
                 </div>
                 
                 <div class="form-field">
-                    <label id="playerCountLabel">2. Количество человек</label>
+                    <label id="playerCountLabel" data-ru="2. Количество человек" data-en="2. Number of players">2. Количество человек</label>
                     <input type="text" id="playerCount" placeholder="например: 4">
                 </div>
                 
                 <div class="form-field">
-                    <label id="resourcesLabel">3. Ресурсы</label>
+                    <label id="resourcesLabel" data-ru="3. Ресурсы" data-en="3. Resources">3. Ресурсы</label>
                     <input type="text" id="resources" placeholder="например: 100к камня 20к металла">
                 </div>
                 
                 <div class="form-field">
-                    <label id="footprintLabel">4. Футпринт</label>
+                    <label id="footprintLabel" data-ru="4. Футпринт" data-en="4. Footprint">4. Футпринт</label>
                     <input type="text" id="footprint" placeholder="например: 3x3">
                 </div>
                 
                 <div class="form-field">
-                    <label id="commentsLabel">5. Дополнительные комментарии</label>
+                    <label id="commentsLabel" data-ru="5. Дополнительные комментарии" data-en="5. Additional comments">5. Дополнительные комментарии</label>
                     <textarea id="comments" placeholder="Что еще важно знать о базе..."></textarea>
                 </div>
             </div>
             
             <!-- Загрузка фото -->
             <div class="photo-upload" id="photoUpload" onclick="triggerFileUpload()">
-                <span id="photoUploadText">➕ Прикрепить фотографии (до 5 штук)</span>
+                <span id="photoUploadText" data-ru="➕ Прикрепить фотографии (до 5 штук)" data-en="➕ Attach photos (up to 5 pieces)">➕ Прикрепить фотографии (до 5 штук)</span>
                 <input type="file" id="fileInput" multiple accept="image/*" style="display: none;" onchange="handleFileSelect(event)">
             </div>
             
             <div class="photo-preview" id="photoPreview"></div>
             
-            <button class="action-btn" onclick="sendContestEntry()" id="sendContestBtn">ОТПРАВИТЬ ЗАЯВКУ</button>
-            <button class="secondary-btn" onclick="closeModal('contestModal')" id="closeContestBtn">✕</button>
+            <button class="action-btn" onclick="sendContestEntry()" id="sendContestBtn" data-ru="ОТПРАВИТЬ ЗАЯВКУ" data-en="SEND APPLICATION">ОТПРАВИТЬ ЗАЯВКУ</button>
+            <button class="secondary-btn" onclick="closeModal('contestModal')" id="closeContestBtn" data-ru="✕" data-en="✕">✕</button>
         </div>
     </div>
     
@@ -773,16 +787,16 @@
     <div class="modal" id="multitoolModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="multitoolTitle">МУЛЬТИТУЛ</h2>
+                <h2 id="multitoolTitle" data-ru="МУЛЬТИТУЛ" data-en="MULTITOOL">МУЛЬТИТУЛ</h2>
                 <button class="close-btn" onclick="closeModal('multitoolModal')">✕</button>
             </div>
             
             <div class="description" id="multitoolDescription">
-                <p>⚡️ RustTweaker by Woodcock — это необходимый инструмент для Растера! В одном удобном приложении собран самый полезный функционал для комфортного геймплея, чтобы каждый из вас — от новичка до киберкотлеты — смог насладиться игрой в Rust!</p>
+                <p data-ru="⚡️ RustTweaker by Woodcock — это необходимый инструмент для Растера! В одном удобном приложении собран самый полезный функционал для комфортного геймплея, чтобы каждый из вас — от новичка до киберкотлеты — смог насладиться игрой в Rust!" data-en="⚡️ RustTweaker by Woodcock is an essential tool for Ruster! The most useful functionality for comfortable gameplay is collected in one convenient application, so that everyone - from beginner to pro - can enjoy playing Rust!">⚡️ RustTweaker by Woodcock — это необходимый инструмент для Растера! В одном удобном приложении собран самый полезный функционал для комфортного геймплея, чтобы каждый из вас — от новичка до киберкотлеты — смог насладиться игрой в Rust!</p>
             </div>
             
-            <button class="action-btn" onclick="openLink('https://rusttweaker.com/?utm_source=telegram&utm_medium=customdesign&utm_campaign=button')" id="multitoolLinkBtn">ДАЙТЕ ССЫЛКУ</button>
-            <button class="secondary-btn" onclick="closeModal('multitoolModal')" id="multitoolCloseBtn">✕</button>
+            <button class="action-btn" onclick="openLink('https://rusttweaker.com/?utm_source=telegram&utm_medium=customdesign&utm_campaign=button')" id="multitoolLinkBtn" data-ru="ДАЙТЕ ССЫЛКУ" data-en="GIVE LINK">ДАЙТЕ ССЫЛКУ</button>
+            <button class="secondary-btn" onclick="closeModal('multitoolModal')" id="multitoolCloseBtn" data-ru="✕" data-en="✕">✕</button>
         </div>
     </div>
     
@@ -790,18 +804,18 @@
     <div class="modal" id="vpnModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="vpnTitle">VPN</h2>
+                <h2 id="vpnTitle" data-ru="VPN" data-en="VPN">VPN</h2>
                 <button class="close-btn" onclick="closeModal('vpnModal')">✕</button>
             </div>
             
             <div class="description" id="vpnDescription">
-                <p>vpnBAZAru.net — современный и безопасный VPN в Telegram.</p>
-                <p>Передовые протоколы, отсутствие лимитов скорости и поддержка всех устройств. Умный алгоритм гарантирует бесперебойный доступ к любым сайтам и сервисам.</p>
-                <p style="color: #10b981; font-weight: 700;">🎁 Попробуйте бесплатно в течение 7 дней.</p>
+                <p data-ru="vpnBAZAru.net — современный и безопасный VPN в Telegram." data-en="vpnBAZAru.net — modern and secure VPN in Telegram.">vpnBAZAru.net — современный и безопасный VPN в Telegram.</p>
+                <p data-ru="Передовые протоколы, отсутствие лимитов скорости и поддержка всех устройств. Умный алгоритм гарантирует бесперебойный доступ к любым сайтам и сервисам." data-en="Advanced protocols, no speed limits and support for all devices. Smart algorithm guarantees uninterrupted access to any sites and services.">Передовые протоколы, отсутствие лимитов скорости и поддержка всех устройств. Умный алгоритм гарантирует бесперебойный доступ к любым сайтам и сервисам.</p>
+                <p style="color: #10b981; font-weight: 700;" data-ru="🎁 Попробуйте бесплатно в течение 7 дней." data-en="🎁 Try for free for 7 days.">🎁 Попробуйте бесплатно в течение 7 дней.</p>
             </div>
             
-            <button class="action-btn" onclick="openLink('https://t.me/vpnbazarunet_bot')" id="vpnLinkBtn">ДАЙТЕ ССЫЛКУ</button>
-            <button class="secondary-btn" onclick="closeModal('vpnModal')" id="vpnCloseBtn">✕</button>
+            <button class="action-btn" onclick="openLink('https://t.me/vpnbazarunet_bot')" id="vpnLinkBtn" data-ru="ДАЙТЕ ССЫЛКУ" data-en="GIVE LINK">ДАЙТЕ ССЫЛКУ</button>
+            <button class="secondary-btn" onclick="closeModal('vpnModal')" id="vpnCloseBtn" data-ru="✕" data-en="✕">✕</button>
         </div>
     </div>
     
@@ -809,15 +823,15 @@
     <div class="modal" id="historyModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="historyTitle">ИСТОРИЯ ЗАКАЗОВ</h2>
+                <h2 id="historyTitle" data-ru="ИСТОРИЯ ЗАКАЗОВ" data-en="ORDER HISTORY">ИСТОРИЯ ЗАКАЗОВ</h2>
                 <button class="close-btn" onclick="closeModal('historyModal')">✕</button>
             </div>
             
             <div class="description" style="text-align: center; padding: 40px 0;" id="historyDescription">
-                <p style="font-size: 16px; color: #64748b;">📋 За последние 31 день у вас не было заказов.</p>
+                <p style="font-size: 16px; color: #64748b;" data-ru="📋 За последние 31 день у вас не было заказов." data-en="📋 You have no orders in the last 31 days.">📋 За последние 31 день у вас не было заказов.</p>
             </div>
             
-            <button class="secondary-btn" onclick="closeModal('historyModal')" id="historyCloseBtn">ЗАКРЫТЬ</button>
+            <button class="secondary-btn" onclick="closeModal('historyModal')" id="historyCloseBtn" data-ru="ЗАКРЫТЬ" data-en="CLOSE">ЗАКРЫТЬ</button>
         </div>
     </div>
     
@@ -825,36 +839,36 @@
     <div class="modal" id="customBaseModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="customBaseTitle">🏗 КАСТОМНАЯ БАЗА</h2>
+                <h2 id="customBaseTitle" data-ru="🏗 КАСТОМНАЯ БАЗА" data-en="🏗 CUSTOM BASE">🏗 КАСТОМНАЯ БАЗА</h2>
                 <button class="close-btn" onclick="closeCustomBaseModals()">✕</button>
             </div>
             
             <div class="description" id="customBaseDescription">
-                <p><strong>Сервис заказов кастомных баз от Good Joint и его команды!</strong></p>
-                <p>Мы создаём базы под любой стиль игры — от компактных соло баз до клановых замков!</p>
+                <p><strong data-ru="Сервис заказов кастомных баз от Good Joint и его команды!" data-en="Custom base ordering service from Good Joint and his team!">Сервис заказов кастомных баз от Good Joint и его команды!</strong></p>
+                <p data-ru="Мы создаём базы под любой стиль игры — от компактных соло баз до клановых замков!" data-en="We create bases for any play style — from compact solo bases to clan castles!">Мы создаём базы под любой стиль игры — от компактных соло баз до клановых замков!</p>
             </div>
             
             <div class="features-list" id="customBaseFeatures">
-                <div class="feature-item"><span class="feature-bullet"></span> Разработка базы под ваш стиль</div>
-                <div class="feature-item"><span class="feature-bullet"></span> Обсуждение возникших вопросов</div>
-                <div class="feature-item"><span class="feature-bullet"></span> Корректировки базы по необходимости</div>
-                <div class="feature-item"><span class="feature-bullet"></span> Код базы на Rust Room BUILD by GJ</div>
+                <div class="feature-item"><span class="feature-bullet"></span> <span data-ru="Разработка базы под ваш стиль" data-en="Base development for your style">Разработка базы под ваш стиль</span></div>
+                <div class="feature-item"><span class="feature-bullet"></span> <span data-ru="Обсуждение возникших вопросов" data-en="Discussion of questions">Обсуждение возникших вопросов</span></div>
+                <div class="feature-item"><span class="feature-bullet"></span> <span data-ru="Корректировки базы по необходимости" data-en="Base adjustments as needed">Корректировки базы по необходимости</span></div>
+                <div class="feature-item"><span class="feature-bullet"></span> <span data-ru="Код базы на Rust Room BUILD by GJ" data-en="Base code on Rust Room BUILD by GJ">Код базы на Rust Room BUILD by GJ</span></div>
             </div>
             
             <div class="description" id="customBaseExtra">
-                <p><strong>Дополнительно:</strong> Румтур + видео гайд на Вашу базу</p>
-                <p style="color: #10b981;">⏱️ Срок выполнения: в среднем до 7 дней</p>
-                <p style="font-size: 13px; color: #64748b;">(Цена зависит от размера базы и команды играющей в ней)</p>
+                <p><strong data-ru="Дополнительно:" data-en="Additional:">Дополнительно:</strong> <span data-ru="Румтур + видео гайд на Вашу базу" data-en="Walkthrough + video guide for your base">Румтур + видео гайд на Вашу базу</span></p>
+                <p style="color: #10b981;" data-ru="⏱️ Срок выполнения: в среднем до 7 дней" data-en="⏱️ Order completion time: on average up to 7 days">⏱️ Срок выполнения: в среднем до 7 дней</p>
+                <p style="font-size: 13px; color: #64748b;" data-ru="(Цена зависит от размера базы и команды играющей в ней)" data-en="(Price depends on base size and team playing in it)">(Цена зависит от размера базы и команды играющей в ней)</p>
             </div>
             
             <div class="links-row">
-                <a href="#" onclick="openLink('https://t.me/+EqrKbhBbTJZmOWEy')" id="reviewsLink">Отзывы</a>
-                <a href="#" onclick="openLink('https://docs.google.com/document/d/1_oIQq2ac_qY5QQrJodl029rRRnoh__tKJ4zufGV4WrM')" id="termsLink">Пользовательское соглашение</a>
-                <a href="#" onclick="openLink('https://docs.google.com/document/d/1N9vfsW3KIAqM6Nk7lID4Aydb9XEnq9RHpoeCjXXJaeg')" id="privacyLink">Политика конфиденциальности</a>
+                <a href="#" onclick="openLink('https://t.me/+EqrKbhBbTJZmOWEy')" id="reviewsLink" data-ru="Отзывы" data-en="Reviews">Отзывы</a>
+                <a href="#" onclick="openLink('https://docs.google.com/document/d/1_oIQq2ac_qY5QQrJodl029rRRnoh__tKJ4zufGV4WrM')" id="termsLink" data-ru="Пользовательское соглашение" data-en="Terms of Service">Пользовательское соглашение</a>
+                <a href="#" onclick="openLink('https://docs.google.com/document/d/1N9vfsW3KIAqM6Nk7lID4Aydb9XEnq9RHpoeCjXXJaeg')" id="privacyLink" data-ru="Политика конфиденциальности" data-en="Privacy Policy">Политика конфиденциальности</a>
             </div>
             
-            <button class="action-btn" onclick="showTariffSelection()" id="orderBaseBtn">ЗАКАЗАТЬ БАЗУ</button>
-            <button class="secondary-btn" onclick="closeCustomBaseModals()" id="thinkLaterBtn">ЕЩЁ ПОДУМАЮ</button>
+            <button class="action-btn" onclick="showTariffSelection()" id="orderBaseBtn" data-ru="ЗАКАЗАТЬ БАЗУ" data-en="ORDER BASE">ЗАКАЗАТЬ БАЗУ</button>
+            <button class="secondary-btn" onclick="closeCustomBaseModals()" id="thinkLaterBtn" data-ru="ЕЩЁ ПОДУМАЮ" data-en="I'LL THINK LATER">ЕЩЁ ПОДУМАЮ</button>
         </div>
     </div>
     
@@ -862,23 +876,23 @@
     <div class="modal" id="tariffModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="tariffTitle">ВЫБЕРИТЕ ТАРИФ</h2>
+                <h2 id="tariffTitle" data-ru="ВЫБЕРИТЕ ТАРИФ" data-en="CHOOSE TARIFF">ВЫБЕРИТЕ ТАРИФ</h2>
                 <button class="close-btn" onclick="closeCustomBaseModals()">✕</button>
             </div>
             
             <div class="description" id="tariffDescription">
-                <p>📝 Выберите тариф для заказа кастомной базы</p>
+                <p data-ru="📝 Выберите тариф для заказа кастомной базы" data-en="📝 Choose a tariff for ordering a custom base">📝 Выберите тариф для заказа кастомной базы</p>
             </div>
             
             <div class="tariff-grid">
-                <button class="tariff-btn" onclick="selectTariff('1-2 игрока')" id="tariff1">1-2 игрока</button>
-                <button class="tariff-btn" onclick="selectTariff('3-4 игрока')" id="tariff2">3-4 игрока</button>
-                <button class="tariff-btn" onclick="selectTariff('5-6 игроков')" id="tariff3">5-6 игроков</button>
-                <button class="tariff-btn" onclick="selectTariff('7-10 игроков')" id="tariff4">7-10 игроков</button>
-                <button class="tariff-btn large" onclick="selectTariff('20+ игроков')" id="tariff5">20+ игроков</button>
+                <button class="tariff-btn" onclick="selectTariff('1-2 игрока')" id="tariff1" data-ru="1-2 игрока" data-en="1-2 players">1-2 игрока</button>
+                <button class="tariff-btn" onclick="selectTariff('3-4 игрока')" id="tariff2" data-ru="3-4 игрока" data-en="3-4 players">3-4 игрока</button>
+                <button class="tariff-btn" onclick="selectTariff('5-6 игроков')" id="tariff3" data-ru="5-6 игроков" data-en="5-6 players">5-6 игроков</button>
+                <button class="tariff-btn" onclick="selectTariff('7-10 игроков')" id="tariff4" data-ru="7-10 игроков" data-en="7-10 players">7-10 игроков</button>
+                <button class="tariff-btn large" onclick="selectTariff('20+ игроков')" id="tariff5" data-ru="20+ игроков" data-en="20+ players">20+ игроков</button>
             </div>
             
-            <button class="secondary-btn" onclick="closeCustomBaseModals()" id="tariffCancelBtn">✕</button>
+            <button class="secondary-btn" onclick="closeCustomBaseModals()" id="tariffCancelBtn" data-ru="✕" data-en="✕">✕</button>
         </div>
     </div>
     
@@ -886,32 +900,32 @@
     <div class="modal" id="builderModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="builderTitle">ВЫБЕРИТЕ СТРОИТЕЛЯ</h2>
+                <h2 id="builderTitle" data-ru="ВЫБЕРИТЕ СТРОИТЕЛЯ" data-en="CHOOSE BUILDER">ВЫБЕРИТЕ СТРОИТЕЛЯ</h2>
                 <button class="close-btn" onclick="closeCustomBaseModals()">✕</button>
             </div>
             
-            <div class="selection-badge" id="selectedTariffDisplay">Выбран тариф: не выбран</div>
+            <div class="selection-badge" id="selectedTariffDisplay" data-ru="Выбран тариф: не выбран" data-en="Selected tariff: not selected">Выбран тариф: не выбран</div>
             
             <div class="description" id="builderDescription">
-                <p>👷 Выберите строителя для вашей базы</p>
+                <p data-ru="👷 Выберите строителя для вашей базы" data-en="👷 Choose a builder for your base">👷 Выберите строителя для вашей базы</p>
             </div>
             
             <div class="builders-grid">
                 <button class="builder-btn" onclick="selectBuilder('DVM')">
                     DVM
-                    <div class="role">строитель</div>
+                    <div class="role" data-ru="строитель" data-en="builder">строитель</div>
                 </button>
                 <button class="builder-btn" onclick="selectBuilder('Good Joint')">
                     Good Joint
-                    <div class="role">строитель</div>
+                    <div class="role" data-ru="строитель" data-en="builder">строитель</div>
                 </button>
                 <button class="builder-btn" onclick="selectBuilder('Биг Джонни')">
                     Биг Джонни
-                    <div class="role">строитель</div>
+                    <div class="role" data-ru="строитель" data-en="builder">строитель</div>
                 </button>
             </div>
             
-            <button class="secondary-btn" onclick="closeCustomBaseModals()" id="builderCancelBtn">✕</button>
+            <button class="secondary-btn" onclick="closeCustomBaseModals()" id="builderCancelBtn" data-ru="✕" data-en="✕">✕</button>
         </div>
     </div>
     
@@ -919,28 +933,28 @@
     <div class="modal" id="guideModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="guideTitle">ГАЙД НА СТРОИТЕЛЬСТВО</h2>
+                <h2 id="guideTitle" data-ru="ГАЙД НА СТРОИТЕЛЬСТВО" data-en="BUILDING GUIDE">ГАЙД НА СТРОИТЕЛЬСТВО</h2>
                 <button class="close-btn" onclick="closeCustomBaseModals()">✕</button>
             </div>
             
-            <div class="selection-badge" id="selectedBuilderDisplay">✅ Выбран билдер: не выбран</div>
+            <div class="selection-badge" id="selectedBuilderDisplay" data-ru="✅ Выбран билдер: не выбран" data-en="✅ Selected builder: not selected">✅ Выбран билдер: не выбран</div>
             
             <div class="description" id="guideDescription">
-                <p><strong>📚 Гайд на строительство базы</strong></p>
-                <p>Хотите получить подробный пошаговый гайд по строительству выбранной базы?</p>
-                <p>Он поможет:</p>
-                <p>• Быстро собрать нужные модули<br>
-                • Правильно расставить элементы<br>
-                • Избежать частых ошибок при постройке</p>
-                <p>Добавить гайд к заказу?</p>
+                <p><strong data-ru="📚 Гайд на строительство базы" data-en="📚 Building guide">📚 Гайд на строительство базы</strong></p>
+                <p data-ru="Хотите получить подробный пошаговый гайд по строительству выбранной базы?" data-en="Do you want to get a detailed step-by-step guide on building the selected base?">Хотите получить подробный пошаговый гайд по строительству выбранной базы?</p>
+                <p data-ru="Он поможет:" data-en="It will help:">Он поможет:</p>
+                <p><span data-ru="• Быстро собрать нужные модули" data-en="• Quickly assemble the necessary modules">• Быстро собрать нужные модули</span><br>
+                <span data-ru="• Правильно расставить элементы" data-en="• Correctly place elements">• Правильно расставить элементы</span><br>
+                <span data-ru="• Избежать частых ошибок при постройке" data-en="• Avoid common mistakes during construction">• Избежать частых ошибок при постройке</span></p>
+                <p data-ru="Добавить гайд к заказу?" data-en="Add a guide to the order?">Добавить гайд к заказу?</p>
             </div>
             
             <div class="guide-buttons">
-                <button class="guide-yes-btn" onclick="selectGuide(true)" id="guideYesBtn">✅ Да, добавить гайд</button>
-                <button class="guide-no-btn" onclick="selectGuide(false)" id="guideNoBtn">❌ Нет, не добавлять</button>
+                <button class="guide-yes-btn" onclick="selectGuide(true)" id="guideYesBtn" data-ru="✅ Да, добавить гайд" data-en="✅ Yes, add guide">✅ Да, добавить гайд</button>
+                <button class="guide-no-btn" onclick="selectGuide(false)" id="guideNoBtn" data-ru="❌ Нет, не добавлять" data-en="❌ No, don't add">❌ Нет, не добавлять</button>
             </div>
             
-            <button class="secondary-btn" onclick="closeCustomBaseModals()" id="guideCancelBtn">✕</button>
+            <button class="secondary-btn" onclick="closeCustomBaseModals()" id="guideCancelBtn" data-ru="✕" data-en="✕">✕</button>
         </div>
     </div>
     
@@ -948,25 +962,25 @@
     <div class="modal" id="contactModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="contactTitle">КОНТАКТНЫЕ ДАННЫЕ</h2>
+                <h2 id="contactTitle" data-ru="КОНТАКТНЫЕ ДАННЫЕ" data-en="CONTACT INFORMATION">КОНТАКТНЫЕ ДАННЫЕ</h2>
                 <button class="close-btn" onclick="closeCustomBaseModals()">✕</button>
             </div>
             
             <div class="description" id="contactDescription">
-                <p><strong>📞 Контактные данные</strong></p>
-                <p>Пожалуйста, укажите как с вами можно связаться:</p>
-                <p>• Telegram username (если есть)<br>
-                • Другой способ связи (Email, Discord и т.д.)</p>
-                <p>Это необходимо для уточнения деталей заказа.</p>
+                <p><strong data-ru="📞 Контактные данные" data-en="📞 Contact information">📞 Контактные данные</strong></p>
+                <p data-ru="Пожалуйста, укажите как с вами можно связаться:" data-en="Please specify how we can contact you:">Пожалуйста, укажите как с вами можно связаться:</p>
+                <p><span data-ru="• Telegram username (если есть)" data-en="• Telegram username (if any)">• Telegram username (если есть)</span><br>
+                <span data-ru="• Другой способ связи (Email, Discord и т.д.)" data-en="• Other contact method (Email, Discord, etc.)">• Другой способ связи (Email, Discord и т.д.)</span></p>
+                <p data-ru="Это необходимо для уточнения деталей заказа." data-en="This is necessary to clarify order details.">Это необходимо для уточнения деталей заказа.</p>
             </div>
             
             <div class="form-field">
-                <label id="contactLabel">Контактные данные</label>
+                <label id="contactLabel" data-ru="Контактные данные" data-en="Contact information">Контактные данные</label>
                 <textarea id="contactInfo" rows="3" placeholder="Например: @username или email@example.com"></textarea>
             </div>
             
-            <button class="action-btn" onclick="submitOrder()" id="submitOrderBtn">ОТПРАВИТЬ ЗАКАЗ</button>
-            <button class="secondary-btn" onclick="closeCustomBaseModals()" id="contactCancelBtn">✕</button>
+            <button class="action-btn" onclick="submitOrder()" id="submitOrderBtn" data-ru="ОТПРАВИТЬ ЗАКАЗ" data-en="SUBMIT ORDER">ОТПРАВИТЬ ЗАКАЗ</button>
+            <button class="secondary-btn" onclick="closeCustomBaseModals()" id="contactCancelBtn" data-ru="✕" data-en="✕">✕</button>
         </div>
     </div>
     
@@ -974,33 +988,33 @@
     <div class="modal" id="vipModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="vipTitle">VIP СТАТУС</h2>
+                <h2 id="vipTitle" data-ru="VIP СТАТУС" data-en="VIP STATUS">VIP СТАТУС</h2>
                 <button class="close-btn" onclick="closeVIPModals()">✕</button>
             </div>
             
             <div class="description" id="vipDescription">
-                <p>⭐️ VIP статус на сервер для строительства Rust Room BUILD by GJ даст вам:</p>
+                <p data-ru="⭐️ VIP статус на сервер для строительства Rust Room BUILD by GJ даст вам:" data-en="⭐️ VIP status on the Rust Room BUILD by GJ construction server will give you:">⭐️ VIP статус на сервер для строительства Rust Room BUILD by GJ даст вам:</p>
             </div>
             
             <div class="features-list">
-                <div class="feature-item"><span class="feature-bullet"></span> пропуск очереди</div>
-                <div class="feature-item"><span class="feature-bullet"></span> кастомные острова (скалы, пещеры и т.д.)</div>
-                <div class="feature-item"><span class="feature-bullet"></span> ракетная пушка</div>
-                <div class="feature-item"><span class="feature-bullet"></span> запуск МЛРС</div>
-                <div class="feature-item"><span class="feature-bullet"></span> неограниченное число сохранений базы</div>
-                <div class="feature-item"><span class="feature-bullet"></span> расширенные лимиты на постройки</div>
-                <div class="feature-item"><span class="feature-bullet"></span> уменьшение кулдаунов на действия</div>
-                <div class="feature-item"><span class="feature-bullet"></span> кастомные коды для ваших баз</div>
-                <div class="feature-item"><span class="feature-bullet"></span> сменяемый цвет купола (зелёный, фиолетовый, прозрачный и т.д.)</div>
+                <div class="feature-item"><span class="feature-bullet"></span> <span data-ru="пропуск очереди" data-en="queue skip">пропуск очереди</span></div>
+                <div class="feature-item"><span class="feature-bullet"></span> <span data-ru="кастомные острова (скалы, пещеры и т.д.)" data-en="custom islands (rocks, caves, etc.)">кастомные острова (скалы, пещеры и т.д.)</span></div>
+                <div class="feature-item"><span class="feature-bullet"></span> <span data-ru="ракетная пушка" data-en="rocket launcher">ракетная пушка</span></div>
+                <div class="feature-item"><span class="feature-bullet"></span> <span data-ru="запуск МЛРС" data-en="MLRS launch">запуск МЛРС</span></div>
+                <div class="feature-item"><span class="feature-bullet"></span> <span data-ru="неограниченное число сохранений базы" data-en="unlimited base saves">неограниченное число сохранений базы</span></div>
+                <div class="feature-item"><span class="feature-bullet"></span> <span data-ru="расширенные лимиты на постройки" data-en="extended build limits">расширенные лимиты на постройки</span></div>
+                <div class="feature-item"><span class="feature-bullet"></span> <span data-ru="уменьшение кулдаунов на действия" data-en="reduced cooldowns">уменьшение кулдаунов на действия</span></div>
+                <div class="feature-item"><span class="feature-bullet"></span> <span data-ru="кастомные коды для ваших баз" data-en="custom codes for your bases">кастомные коды для ваших баз</span></div>
+                <div class="feature-item"><span class="feature-bullet"></span> <span data-ru="сменяемый цвет купола" data-en="changeable dome color">сменяемый цвет купола (зелёный, фиолетовый, прозрачный и т.д.)</span></div>
             </div>
             
             <div class="links-row">
-                <a href="#" onclick="openLink('https://docs.google.com/document/d/1_oIQq2ac_qY5QQrJodl029rRRnoh__tKJ4zufGV4WrM')" id="vipTermsLink">Пользовательское соглашение</a>
-                <a href="#" onclick="openLink('https://docs.google.com/document/d/1N9vfsW3KIAqM6Nk7lID4Aydb9XEnq9RHpoeCjXXJaeg')" id="vipPrivacyLink">Политика конфиденциальности</a>
+                <a href="#" onclick="openLink('https://docs.google.com/document/d/1_oIQq2ac_qY5QQrJodl029rRRnoh__tKJ4zufGV4WrM')" id="vipTermsLink" data-ru="Пользовательское соглашение" data-en="Terms of Service">Пользовательское соглашение</a>
+                <a href="#" onclick="openLink('https://docs.google.com/document/d/1N9vfsW3KIAqM6Nk7lID4Aydb9XEnq9RHpoeCjXXJaeg')" id="vipPrivacyLink" data-ru="Политика конфиденциальности" data-en="Privacy Policy">Политика конфиденциальности</a>
             </div>
             
-            <button class="action-btn" onclick="showVIPStep2()" id="vipOrderBtn">ОФОРМИТЬ VIP</button>
-            <button class="secondary-btn" onclick="closeVIPModals()" id="vipThinkLaterBtn">ЕЩЁ ПОДУМАЮ</button>
+            <button class="action-btn" onclick="showVIPStep2()" id="vipOrderBtn" data-ru="ОФОРМИТЬ VIP" data-en="GET VIP">ОФОРМИТЬ VIP</button>
+            <button class="secondary-btn" onclick="closeVIPModals()" id="vipThinkLaterBtn" data-ru="ЕЩЁ ПОДУМАЮ" data-en="I'LL THINK LATER">ЕЩЁ ПОДУМАЮ</button>
         </div>
     </div>
     
@@ -1008,12 +1022,12 @@
     <div class="modal" id="vipStep2Modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="vipStep2Title">ОФОРМЛЕНИЕ VIP</h2>
+                <h2 id="vipStep2Title" data-ru="ОФОРМЛЕНИЕ VIP" data-en="VIP REGISTRATION">ОФОРМЛЕНИЕ VIP</h2>
                 <button class="close-btn" onclick="closeVIPModals()">✕</button>
             </div>
             
             <div class="description" id="vipStep2Description">
-                <p>📝 Для покупки VIP отправьте ваш STEAM ID64</p>
+                <p data-ru="📝 Для покупки VIP отправьте ваш STEAM ID64" data-en="📝 To purchase VIP, send your STEAM ID64">📝 Для покупки VIP отправьте ваш STEAM ID64</p>
                 <p class="example-text">Пример: 76561198123456789</p>
             </div>
             
@@ -1021,8 +1035,8 @@
                 <input type="text" id="steamId" placeholder="Введите STEAM ID64">
             </div>
             
-            <button class="action-btn" onclick="showVIPStep3()" id="vipStep2Continue">ПРОДОЛЖИТЬ</button>
-            <button class="secondary-btn" onclick="closeVIPModals()" id="vipStep2Cancel">✕</button>
+            <button class="action-btn" onclick="showVIPStep3()" id="vipStep2Continue" data-ru="ПРОДОЛЖИТЬ" data-en="CONTINUE">ПРОДОЛЖИТЬ</button>
+            <button class="secondary-btn" onclick="closeVIPModals()" id="vipStep2Cancel" data-ru="✕" data-en="✕">✕</button>
         </div>
     </div>
     
@@ -1030,17 +1044,17 @@
     <div class="modal" id="vipStep3Modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="vipStep3Title">ПРОМОКОД</h2>
+                <h2 id="vipStep3Title" data-ru="ПРОМОКОД" data-en="PROMO CODE">ПРОМОКОД</h2>
                 <button class="close-btn" onclick="closeVIPModals()">✕</button>
             </div>
             
             <div class="promo-section">
-                <div class="promo-text" id="promoQuestion">🎫 У вас есть промокод?</div>
-                <div class="promo-text" style="font-size: 13px;" id="promoDescription">Если у вас есть промокод на скидку, вы можете ввести его сейчас.</div>
+                <div class="promo-text" id="promoQuestion" data-ru="🎫 У вас есть промокод?" data-en="🎫 Do you have a promo code?">🎫 У вас есть промокод?</div>
+                <div class="promo-text" style="font-size: 13px;" id="promoDescription" data-ru="Если у вас есть промокод на скидку, вы можете ввести его сейчас." data-en="If you have a discount promo code, you can enter it now.">Если у вас есть промокод на скидку, вы можете ввести его сейчас.</div>
                 
                 <div class="promo-buttons">
-                    <button class="promo-btn" onclick="showVIPPromoInput()" id="promoYesBtn">УКАЗАТЬ ПРОМО</button>
-                    <button class="promo-btn primary" onclick="showVIPStep4()" id="promoSkipBtn">ПРОПУСТИТЬ</button>
+                    <button class="promo-btn" onclick="showVIPPromoInput()" id="promoYesBtn" data-ru="УКАЗАТЬ ПРОМО" data-en="ENTER PROMO">УКАЗАТЬ ПРОМО</button>
+                    <button class="promo-btn primary" onclick="showVIPStep4()" id="promoSkipBtn" data-ru="ПРОПУСТИТЬ" data-en="SKIP">ПРОПУСТИТЬ</button>
                 </div>
             </div>
             
@@ -1048,10 +1062,10 @@
                 <div class="form-field">
                     <input type="text" id="promoCode" placeholder="Введите промокод">
                 </div>
-                <button class="action-btn" onclick="applyPromo()" id="applyPromoBtn">ПРИМЕНИТЬ</button>
+                <button class="action-btn" onclick="applyPromo()" id="applyPromoBtn" data-ru="ПРИМЕНИТЬ" data-en="APPLY">ПРИМЕНИТЬ</button>
             </div>
             
-            <button class="secondary-btn" onclick="closeVIPModals()" id="vipStep3Cancel">✕</button>
+            <button class="secondary-btn" onclick="closeVIPModals()" id="vipStep3Cancel" data-ru="✕" data-en="✕">✕</button>
         </div>
     </div>
     
@@ -1059,7 +1073,7 @@
     <div class="modal" id="vipStep4Modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="vipStep4Title">ВЫБЕРИТЕ СПОСОБ ОПЛАТЫ</h2>
+                <h2 id="vipStep4Title" data-ru="ВЫБЕРИТЕ СПОСОБ ОПЛАТЫ" data-en="CHOOSE PAYMENT METHOD">ВЫБЕРИТЕ СПОСОБ ОПЛАТЫ</h2>
                 <button class="close-btn" onclick="closeVIPModals()">✕</button>
             </div>
             
@@ -1072,7 +1086,7 @@
                 <button class="payment-btn manager" onclick="contactManager()">СВЯЗАТЬСЯ С МЕНЕДЖЕРОМ</button>
             </div>
             
-            <button class="secondary-btn" onclick="closeVIPModals()" id="vipStep4Cancel">✕</button>
+            <button class="secondary-btn" onclick="closeVIPModals()" id="vipStep4Cancel" data-ru="✕" data-en="✕">✕</button>
         </div>
     </div>
     
@@ -1081,197 +1095,6 @@
         const tg = window.Telegram.WebApp;
         tg.ready();
         tg.expand();
-        
-        // Языковые версии
-        const translations = {
-            ru: {
-                // Здесь будут русские тексты (они уже в HTML)
-            },
-            en: {
-                contestTitle: "SEND BASE TO CONTEST",
-                contestDescription: '<p>Currently there is a selection of bases on the topic <strong>"The Strongest Base for ONLINE DEFENSE"</strong></p><p>The cheaper and stronger you build a base on this topic, the better. Resource limit up to 120k metal. Online defense features and number of rockets for offline raid will be evaluated.</p><p class="important">Important: save bases on Rust Room BUILD must be in access by code. Design your saves beautifully, add photos and descriptions to make it look nice in the video.</p><p>If you want to participate — send your application!</p>',
-                contestFormat: 'Send data in the following format (each item on a new line):',
-                buildCodeLabel: '1. Base code (Rust Room Build)',
-                playerCountLabel: '2. Number of players',
-                resourcesLabel: '3. Resources',
-                footprintLabel: '4. Footprint',
-                commentsLabel: '5. Additional comments',
-                photoUploadText: '➕ Attach photos (up to 5 pieces)',
-                sendContestBtn: 'SEND APPLICATION',
-                
-                multitoolTitle: 'MULTITOOL',
-                multitoolDescription: '<p>⚡️ RustTweaker by Woodcock is an essential tool for Ruster! The most useful functionality for comfortable gameplay is collected in one convenient application, so that everyone - from beginner to cyber cutlet - can enjoy playing Rust!</p>',
-                multitoolLinkBtn: 'GIVE LINK',
-                
-                vpnTitle: 'VPN',
-                vpnDescription: '<p>vpnBAZAru.net — modern and secure VPN in Telegram.</p><p>Advanced protocols, no speed limits and support for all devices. Smart algorithm guarantees uninterrupted access to any sites and services.</p><p style="color: #10b981; font-weight: 700;">🎁 Try for free for 7 days.</p>',
-                vpnLinkBtn: 'GIVE LINK',
-                
-                historyTitle: 'ORDER HISTORY',
-                historyDescription: '<p style="font-size: 16px; color: #64748b;">📋 You have no orders in the last 31 days.</p>',
-                historyCloseBtn: 'CLOSE',
-                
-                customBaseTitle: '🏗 CUSTOM BASE',
-                customBaseDescription: '<p><strong>Custom base ordering service from Good Joint and his team!</strong></p><p>We create bases for any play style — from compact solo bases to clan castles!</p>',
-                customBaseFeatures: '<div class="feature-item"><span class="feature-bullet"></span> Base development for your style</div><div class="feature-item"><span class="feature-bullet"></span> Discussion of questions</div><div class="feature-item"><span class="feature-bullet"></span> Base adjustments as needed</div><div class="feature-item"><span class="feature-bullet"></span> Base code on Rust Room BUILD by GJ</div>',
-                customBaseExtra: '<p><strong>Additional:</strong> Walkthrough + video guide for your base</p><p style="color: #10b981;">⏱️ Order completion time: on average up to 7 days</p><p style="font-size: 13px; color: #64748b;">(Price depends on base size and team playing in it)</p>',
-                reviewsLink: 'Reviews',
-                termsLink: 'Terms of Service',
-                privacyLink: 'Privacy Policy',
-                orderBaseBtn: 'ORDER BASE',
-                thinkLaterBtn: 'I\'LL THINK LATER',
-                
-                tariffTitle: 'CHOOSE TARIFF',
-                tariffDescription: '<p>📝 Choose a tariff for ordering a custom base</p>',
-                tariff1: '1-2 players',
-                tariff2: '3-4 players',
-                tariff3: '5-6 players',
-                tariff4: '7-10 players',
-                tariff5: '20+ players',
-                
-                builderTitle: 'CHOOSE BUILDER',
-                builderDescription: '<p>👷 Choose a builder for your base</p>',
-                selectedTariffDisplay: 'Selected tariff: not selected',
-                
-                guideTitle: 'BUILDING GUIDE',
-                guideDescription: '<p><strong>📚 Building guide</strong></p><p>Do you want to get a detailed step-by-step guide on building the selected base?</p><p>It will help:</p><p>• Quickly assemble the necessary modules<br>• Correctly place elements<br>• Avoid common mistakes during construction</p><p>Add a guide to the order?</p>',
-                guideYesBtn: '✅ Yes, add guide',
-                guideNoBtn: '❌ No, don\'t add',
-                selectedBuilderDisplay: '✅ Selected builder: not selected',
-                
-                contactTitle: 'CONTACT INFORMATION',
-                contactDescription: '<p><strong>📞 Contact information</strong></p><p>Please specify how we can contact you:</p><p>• Telegram username (if any)<br>• Other contact method (Email, Discord, etc.)</p><p>This is necessary to clarify order details.</p>',
-                contactLabel: 'Contact information',
-                submitOrderBtn: 'SUBMIT ORDER',
-                
-                vipTitle: 'VIP STATUS',
-                vipDescription: '<p>⭐️ VIP status on the Rust Room BUILD by GJ construction server will give you:</p>',
-                vipTermsLink: 'Terms of Service',
-                vipPrivacyLink: 'Privacy Policy',
-                vipOrderBtn: 'GET VIP',
-                vipThinkLaterBtn: 'I\'LL THINK LATER',
-                
-                vipStep2Title: 'VIP REGISTRATION',
-                vipStep2Description: '<p>📝 To purchase VIP, send your STEAM ID64</p>',
-                vipStep2Continue: 'CONTINUE',
-                
-                vipStep3Title: 'PROMO CODE',
-                promoQuestion: '🎫 Do you have a promo code?',
-                promoDescription: 'If you have a discount promo code, you can enter it now.',
-                promoYesBtn: 'ENTER PROMO',
-                promoSkipBtn: 'SKIP',
-                applyPromoBtn: 'APPLY',
-                
-                vipStep4Title: 'CHOOSE PAYMENT METHOD',
-            }
-        };
-        
-        // Текущий язык
-        let currentLang = 'ru';
-        
-        // Функция смены языка
-        window.changeLanguage = function(btn, lang) {
-            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentLang = lang;
-            tg.HapticFeedback.impactOccurred('light');
-            
-            if (lang === 'en') {
-                applyEnglishTranslations();
-            } else {
-                // Возврат к русскому (перезагружаем страницу или сбрасываем)
-                location.reload();
-            }
-        };
-        
-        function applyEnglishTranslations() {
-            const t = translations.en;
-            
-            // Contest modal
-            document.getElementById('contestTitle').textContent = t.contestTitle;
-            document.getElementById('contestDescription').innerHTML = t.contestDescription;
-            document.getElementById('contestFormat').innerHTML = t.contestFormat + ' ' + document.getElementById('contestFormat').innerHTML.split('Отправьте данные')[1];
-            document.getElementById('buildCodeLabel').textContent = t.buildCodeLabel;
-            document.getElementById('playerCountLabel').textContent = t.playerCountLabel;
-            document.getElementById('resourcesLabel').textContent = t.resourcesLabel;
-            document.getElementById('footprintLabel').textContent = t.footprintLabel;
-            document.getElementById('commentsLabel').textContent = t.commentsLabel;
-            document.getElementById('photoUploadText').textContent = t.photoUploadText;
-            document.getElementById('sendContestBtn').textContent = t.sendContestBtn;
-            
-            // Multitool modal
-            document.getElementById('multitoolTitle').textContent = t.multitoolTitle;
-            document.getElementById('multitoolDescription').innerHTML = t.multitoolDescription;
-            document.getElementById('multitoolLinkBtn').textContent = t.multitoolLinkBtn;
-            
-            // VPN modal
-            document.getElementById('vpnTitle').textContent = t.vpnTitle;
-            document.getElementById('vpnDescription').innerHTML = t.vpnDescription;
-            document.getElementById('vpnLinkBtn').textContent = t.vpnLinkBtn;
-            
-            // History modal
-            document.getElementById('historyTitle').textContent = t.historyTitle;
-            document.getElementById('historyDescription').innerHTML = t.historyDescription;
-            document.getElementById('historyCloseBtn').textContent = t.historyCloseBtn;
-            
-            // Custom base modal
-            document.getElementById('customBaseTitle').textContent = t.customBaseTitle;
-            document.getElementById('customBaseDescription').innerHTML = t.customBaseDescription;
-            document.getElementById('customBaseFeatures').innerHTML = t.customBaseFeatures;
-            document.getElementById('customBaseExtra').innerHTML = t.customBaseExtra;
-            document.getElementById('reviewsLink').textContent = t.reviewsLink;
-            document.getElementById('termsLink').textContent = t.termsLink;
-            document.getElementById('privacyLink').textContent = t.privacyLink;
-            document.getElementById('orderBaseBtn').textContent = t.orderBaseBtn;
-            document.getElementById('thinkLaterBtn').textContent = t.thinkLaterBtn;
-            
-            // Tariff modal
-            document.getElementById('tariffTitle').textContent = t.tariffTitle;
-            document.getElementById('tariffDescription').innerHTML = t.tariffDescription;
-            document.getElementById('tariff1').textContent = t.tariff1;
-            document.getElementById('tariff2').textContent = t.tariff2;
-            document.getElementById('tariff3').textContent = t.tariff3;
-            document.getElementById('tariff4').textContent = t.tariff4;
-            document.getElementById('tariff5').textContent = t.tariff5;
-            
-            // Builder modal
-            document.getElementById('builderTitle').textContent = t.builderTitle;
-            document.getElementById('builderDescription').innerHTML = t.builderDescription;
-            document.getElementById('selectedTariffDisplay').textContent = t.selectedTariffDisplay;
-            
-            // Guide modal
-            document.getElementById('guideTitle').textContent = t.guideTitle;
-            document.getElementById('guideDescription').innerHTML = t.guideDescription;
-            document.getElementById('guideYesBtn').innerHTML = t.guideYesBtn;
-            document.getElementById('guideNoBtn').innerHTML = t.guideNoBtn;
-            
-            // Contact modal
-            document.getElementById('contactTitle').textContent = t.contactTitle;
-            document.getElementById('contactDescription').innerHTML = t.contactDescription;
-            document.getElementById('contactLabel').textContent = t.contactLabel;
-            document.getElementById('submitOrderBtn').textContent = t.submitOrderBtn;
-            
-            // VIP modals
-            document.getElementById('vipTitle').textContent = t.vipTitle;
-            document.getElementById('vipDescription').innerHTML = t.vipDescription;
-            document.getElementById('vipTermsLink').textContent = t.vipTermsLink;
-            document.getElementById('vipPrivacyLink').textContent = t.vipPrivacyLink;
-            document.getElementById('vipOrderBtn').textContent = t.vipOrderBtn;
-            document.getElementById('vipThinkLaterBtn').textContent = t.vipThinkLaterBtn;
-            
-            document.getElementById('vipStep2Title').textContent = t.vipStep2Title;
-            document.getElementById('vipStep2Description').innerHTML = t.vipStep2Description;
-            document.getElementById('vipStep2Continue').textContent = t.vipStep2Continue;
-            
-            document.getElementById('vipStep3Title').textContent = t.vipStep3Title;
-            document.getElementById('promoQuestion').textContent = t.promoQuestion;
-            document.getElementById('promoDescription').textContent = t.promoDescription;
-            document.getElementById('promoYesBtn').textContent = t.promoYesBtn;
-            document.getElementById('promoSkipBtn').textContent = t.promoSkipBtn;
-            document.getElementById('applyPromoBtn').textContent = t.applyPromoBtn;
-            
-            document.getElementById('vipStep4Title').textContent = t.vipStep4Title;
-        }
         
         // Получаем данные пользователя из Telegram
         const user = tg.initDataUnsafe?.user;
@@ -1316,6 +1139,47 @@
             '20+ игроков': 5000
         };
         
+        // Текущий язык
+        let currentLang = 'ru';
+        
+        // Функция смены языка
+        window.changeLanguage = function(btn, lang) {
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentLang = lang;
+            
+            // Меняем текст у всех элементов с data-ru и data-en
+            document.querySelectorAll('[data-ru]').forEach(el => {
+                if (lang === 'ru') {
+                    el.textContent = el.getAttribute('data-ru');
+                } else {
+                    el.textContent = el.getAttribute('data-en');
+                }
+            });
+            
+            // Обновляем badge
+            document.querySelectorAll('.card-badge').forEach(el => {
+                if (lang === 'ru') {
+                    el.textContent = el.getAttribute('data-ru') || 'NEW';
+                } else {
+                    el.textContent = el.getAttribute('data-en') || 'NEW';
+                }
+            });
+            
+            // Обновляем текст в кнопке гайда с ценой
+            if (selectedTariff) {
+                const price = guidePrices[selectedTariff] || 0;
+                const guideYesBtn = document.getElementById('guideYesBtn');
+                if (lang === 'ru') {
+                    guideYesBtn.innerHTML = `✅ Да, добавить гайд (+${price} рублей)`;
+                } else {
+                    guideYesBtn.innerHTML = `✅ Yes, add guide (+${price} RUB)`;
+                }
+            }
+            
+            tg.HapticFeedback.impactOccurred('light');
+        };
+        
         // Функции для модальных окон
         window.openModal = function(modalId) {
             document.getElementById(modalId).classList.add('show');
@@ -1345,11 +1209,11 @@
             selectedTariff = tariff;
             selectedTariffPrice = guidePrices[tariff] || 0;
             
-            // Обновляем текст на английском если нужно
-            if (currentLang === 'en') {
-                document.getElementById('selectedTariffDisplay').textContent = `Selected tariff: ${tariff}`;
+            const display = document.getElementById('selectedTariffDisplay');
+            if (currentLang === 'ru') {
+                display.textContent = `Выбран тариф: ${tariff}`;
             } else {
-                document.getElementById('selectedTariffDisplay').textContent = `Выбран тариф: ${tariff}`;
+                display.textContent = `Selected tariff: ${tariff}`;
             }
             
             closeModal('tariffModal');
@@ -1360,19 +1224,16 @@
         window.selectBuilder = function(builder) {
             selectedBuilder = builder;
             
-            // Обновляем текст в модалке гайда
-            if (currentLang === 'en') {
-                document.getElementById('selectedBuilderDisplay').textContent = `✅ Selected builder: ${builder}`;
-                
-                // Обновляем текст кнопки с ценой
-                const price = guidePrices[selectedTariff] || 0;
-                document.getElementById('guideYesBtn').innerHTML = `✅ Yes, add guide (+${price} RUB)`;
+            const display = document.getElementById('selectedBuilderDisplay');
+            const guideYesBtn = document.getElementById('guideYesBtn');
+            const price = guidePrices[selectedTariff] || 0;
+            
+            if (currentLang === 'ru') {
+                display.textContent = `✅ Выбран билдер: ${builder}`;
+                guideYesBtn.innerHTML = `✅ Да, добавить гайд (+${price} рублей)`;
             } else {
-                document.getElementById('selectedBuilderDisplay').textContent = `✅ Выбран билдер: ${builder}`;
-                
-                // Обновляем текст кнопки с ценой
-                const price = guidePrices[selectedTariff] || 0;
-                document.getElementById('guideYesBtn').innerHTML = `✅ Да, добавить гайд (+${price} рублей)`;
+                display.textContent = `✅ Selected builder: ${builder}`;
+                guideYesBtn.innerHTML = `✅ Yes, add guide (+${price} RUB)`;
             }
             
             closeModal('builderModal');
@@ -1391,10 +1252,10 @@
             const contactInfo = document.getElementById('contactInfo').value.trim();
             
             if (!contactInfo) {
-                if (currentLang === 'en') {
-                    tg.showAlert('Please enter contact information');
-                } else {
+                if (currentLang === 'ru') {
                     tg.showAlert('Введите контактные данные');
+                } else {
+                    tg.showAlert('Please enter contact information');
                 }
                 return;
             }
@@ -1411,10 +1272,10 @@
                 contact: contactInfo
             }));
             
-            if (currentLang === 'en') {
-                tg.showAlert(`✅ Order sent!\nTariff: ${selectedTariff}\nBuilder: ${selectedBuilder}\nGuide: ${selectedGuide ? 'Yes' : 'No'}`);
-            } else {
+            if (currentLang === 'ru') {
                 tg.showAlert(`✅ Заказ отправлен!\nТариф: ${selectedTariff}\nБилдер: ${selectedBuilder}\nГайд: ${selectedGuide ? 'Да' : 'Нет'}`);
+            } else {
+                tg.showAlert(`✅ Order sent!\nTariff: ${selectedTariff}\nBuilder: ${selectedBuilder}\nGuide: ${selectedGuide ? 'Yes' : 'No'}`);
             }
             
             closeCustomBaseModals();
@@ -1457,10 +1318,10 @@
             const files = Array.from(event.target.files);
             
             if (selectedFiles.length + files.length > 5) {
-                if (currentLang === 'en') {
-                    tg.showAlert('You can attach no more than 5 photos');
-                } else {
+                if (currentLang === 'ru') {
                     tg.showAlert('Можно прикрепить не более 5 фотографий');
+                } else {
+                    tg.showAlert('You can attach no more than 5 photos');
                 }
                 return;
             }
@@ -1506,10 +1367,10 @@
             const comments = document.getElementById('comments').value.trim();
             
             if (!buildCode || !playerCount || !resources || !footprint) {
-                if (currentLang === 'en') {
-                    tg.showAlert('Fill in all required fields');
-                } else {
+                if (currentLang === 'ru') {
                     tg.showAlert('Заполни все обязательные поля');
+                } else {
+                    tg.showAlert('Fill in all required fields');
                 }
                 return;
             }
@@ -1524,10 +1385,10 @@
                 photos_count: selectedFiles.length
             }));
             
-            if (currentLang === 'en') {
-                tg.showAlert('✅ Application sent!');
-            } else {
+            if (currentLang === 'ru') {
                 tg.showAlert('✅ Заявка отправлена!');
+            } else {
+                tg.showAlert('✅ Application sent!');
             }
             
             closeModal('contestModal');
@@ -1546,10 +1407,10 @@
         window.showVIPStep3 = function() {
             const steamId = document.getElementById('steamId').value.trim();
             if (!steamId) {
-                if (currentLang === 'en') {
-                    tg.showAlert('Enter STEAM ID64');
-                } else {
+                if (currentLang === 'ru') {
                     tg.showAlert('Введите STEAM ID64');
+                } else {
+                    tg.showAlert('Enter STEAM ID64');
                 }
                 return;
             }
@@ -1563,10 +1424,10 @@
         
         window.applyPromo = function() {
             const promo = document.getElementById('promoCode').value.trim();
-            if (currentLang === 'en') {
-                tg.showAlert('Promo code applied');
-            } else {
+            if (currentLang === 'ru') {
                 tg.showAlert('Промокод применен');
+            } else {
+                tg.showAlert('Promo code applied');
             }
             showVIPStep4();
         };
@@ -1589,10 +1450,10 @@
                 method: method
             }));
             
-            if (currentLang === 'en') {
-                tg.showAlert('Payment via ' + method.toUpperCase());
-            } else {
+            if (currentLang === 'ru') {
                 tg.showAlert('Оплата через ' + method.toUpperCase());
+            } else {
+                tg.showAlert('Payment via ' + method.toUpperCase());
             }
             
             closeVIPModals();
@@ -1613,8 +1474,4 @@
         };
     </script>
 </body>
-
 </html>
-
-
-
